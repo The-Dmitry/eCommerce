@@ -65,3 +65,16 @@ export async function getUserData(): Promise<UserData> {
   const data = await response.json();
   return data;
 }
+
+export async function logOut() {
+  const cookieStore = cookies();
+
+  cookieStore.getAll().forEach((cookie) => {
+    cookieStore.set({
+      name: cookie.name,
+      value: '',
+      expires: new Date(0),
+      path: '/',
+    });
+  });
+}

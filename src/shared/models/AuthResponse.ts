@@ -1,16 +1,4 @@
-interface AuthError {
-  code: string;
-  message: string;
-}
-interface AuthFail {
-  statusCode: number;
-  message: string;
-  errors: AuthError[];
-  error: string;
-  error_description: string;
-}
-
-interface AuthSuccess {
+export interface AuthSuccess {
   access_token: string;
   expires_in: number;
   token_type: string;
@@ -18,6 +6,15 @@ interface AuthSuccess {
   refresh_token: string;
 }
 
-type AuthResponse = AuthSuccess | AuthFail;
+export interface AuthError {
+  statusCode: number;
+  message: string;
+  errors: {
+    code: string;
+    message: string;
+  }[];
+  error: string;
+  error_description: string;
+}
 
-export default AuthResponse;
+export type AuthResponse = AuthSuccess | AuthError;

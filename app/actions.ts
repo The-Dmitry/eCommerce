@@ -1,10 +1,11 @@
 'use server';
 
 import UserData from '@/src/shared/models/UserData';
+import saveAuthToken from '@/src/shared/utils/save-auth-token';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z, ZodFormattedError } from 'zod';
-import AuthResponse from '../src/shared/models/AuthResponse';
+import { AuthResponse } from '../src/shared/models/AuthResponse';
 import loginSchema from '../src/shared/utils/loginSchema';
 
 type Credentials = z.infer<typeof loginSchema>;
@@ -42,9 +43,7 @@ export async function authQuery(
   if (!('access_token' in result)) {
     return { auth: result.message, credentials: { _errors: [] } };
   }
-  const { access_token, refresh_token, expires_in } = result;
-  cookies().set('access_token', access_token, { maxAge: expires_in });
-  cookies().set('refresh_token', refresh_token, { maxAge: 60 * 60 * 24 * 30 });
+  saveAuthToken(result);
   redirect('/');
 }
 

@@ -1,16 +1,16 @@
-interface LoginError {
+interface AuthError {
   code: string;
   message: string;
 }
-interface LoginFail {
+interface AuthFail {
   statusCode: number;
   message: string;
-  errors: LoginError[];
+  errors: AuthError[];
   error: string;
   error_description: string;
 }
 
-interface LoginSuccess {
+interface AuthSuccess {
   access_token: string;
   expires_in: number;
   token_type: string;
@@ -18,6 +18,6 @@ interface LoginSuccess {
   refresh_token: string;
 }
 
-type LoginResponse = LoginSuccess | LoginFail;
+type AuthResponse = AuthSuccess | AuthFail;
 
-export default LoginResponse;
+export default AuthResponse;

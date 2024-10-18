@@ -1,4 +1,4 @@
-import Header from '../../src/components/Header';
+import Header from '../../src/widgets/Header';
 
 export default function MainLayout({
   children,

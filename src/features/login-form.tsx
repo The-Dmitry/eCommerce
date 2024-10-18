@@ -1,5 +1,5 @@
 'use client';
-import authQuery from '@/src/shared/utils/actions';
+import { authQuery } from '@/app/actions';
 import { useFormState } from 'react-dom';
 import SubmitButton from '../shared/ui/submit-button';
 

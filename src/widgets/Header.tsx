@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import AccountButton from '../features/account-button';
 
 export default function Header() {
   return (
@@ -6,6 +7,7 @@ export default function Header() {
       <Link href={'/login'}>Login</Link>
       <Link href={'/registration'}>Registration</Link>
       <Link href={'/'}>Main</Link>
+      <AccountButton />
     </header>
   );
 }

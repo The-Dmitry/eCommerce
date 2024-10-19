@@ -1,13 +1,12 @@
 import Link from 'next/link';
-import AccountButton from '../features/account-button';
+import UserNavigation from '../features/user-navigation';
 
 export default function Header() {
   return (
     <header className='flex place-content-around bg-orange-600 px-3 py-5'>
-      <Link href={'/login'}>Login</Link>
-      <Link href={'/registration'}>Registration</Link>
       <Link href={'/'}>Main</Link>
-      <AccountButton />
+      <Link href={'/catalog'}>Catalog</Link>
+      <UserNavigation />
     </header>
   );
 }

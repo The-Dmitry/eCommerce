@@ -1,69 +1,70 @@
 'use server';
 
+import { NewCustomer } from '@/src/shared/models/NewCustomer';
 import UserData from '@/src/shared/models/UserData';
-import saveAuthToken from '@/src/shared/utils/save-auth-token';
+import fetchWithToken from '@/src/shared/utils/fetch-with-token';
+import loginUser from '@/src/shared/utils/login-user';
+import revokeToken from '@/src/shared/utils/revoke-token';
+import signupSchema, {
+  SignupData,
+} from '@/src/shared/utils/schemas/signupShema';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { z, ZodFormattedError } from 'zod';
-import { AuthResponse } from '../src/shared/models/AuthResponse';
-import loginSchema from '../src/shared/utils/loginSchema';
+import { ZodFormattedError } from 'zod';
+import { AuthError } from '../src/shared/models/AuthResponse';
+import loginSchema, {
+  LoginData,
+} from '../src/shared/utils/schemas/loginSchema';
 
-type Credentials = z.infer<typeof loginSchema>;
-
-interface AuthResult {
+interface AuthResult<T extends LoginData | SignupData> {
   auth?: string;
-  credentials: ZodFormattedError<Credentials>;
+  credentials: ZodFormattedError<T>;
 }
 
 export async function authQuery(
   _: unknown,
   data: FormData
-): Promise<AuthResult> {
+): Promise<AuthResult<LoginData>> {
   const obj = Object.fromEntries(data.entries());
   const validationResult = await loginSchema.safeParseAsync(obj);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, password } = obj as Credentials;
-
-  const token = btoa(
-    [process.env.CLIENT_ID, process.env.CLIENT_SECRET].join(':')
-  );
-
-  const URL = `${process.env.AUTH_URL}/oauth/${process.env.PROJECT_KEY}/customers/token?grant_type=password&username=${email}&password=${password}`;
-  const response = await fetch(URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
-  const result: AuthResponse = await response.json();
-
-  if (!('access_token' in result)) {
-    return { auth: result.message, credentials: { _errors: [] } };
-  }
-  saveAuthToken(result);
-  redirect('/');
+  const { email, password } = obj as LoginData;
+  return await loginUser(email, password);
 }
 
-export async function getUserData(): Promise<UserData> {
-  const token = cookies().get('access_token');
-  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me`;
-  const response = await fetch(URL, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token?.value}`,
-      'Content-Type': 'application/json',
-    },
+export async function createUser(
+  _: unknown,
+  data: FormData
+): Promise<AuthResult<SignupData>> {
+  const obj = Object.fromEntries(data.entries());
+  const validationResult = await signupSchema.safeParseAsync(obj);
+  if (!validationResult.success) {
+    return { credentials: validationResult.error.format() };
+  }
+  const { email, firstName, lastName, password } = obj as SignupData;
+  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/customers`;
+  const result = await fetchWithToken<NewCustomer<AuthError>>(URL, {
+    method: 'POST',
+    body: JSON.stringify({ email, firstName, lastName, password }),
   });
 
-  // if (!response.ok) {
-  //   return null;
-  // }
+  if ('customer' in result) {
+    await loginUser(email, password);
+  }
+  return { auth: result.message, credentials: { _errors: [] } };
+}
 
-  const data = await response.json();
-  return data;
+export async function getUserData(): Promise<UserData | AuthError | null> {
+  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me`;
+  const result = await fetchWithToken<UserData>(
+    URL,
+    {
+      method: 'GET',
+    },
+    revokeToken
+  );
+  return result;
 }
 
 export async function logOut() {

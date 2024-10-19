@@ -1,7 +1,5 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import getAnonymousToken from './get-anonymous-token';
-import saveAuthToken from './save-auth-token';
 
 export default async function revokeToken() {
   const token = btoa(
@@ -17,11 +15,7 @@ export default async function revokeToken() {
     },
   });
   if (!response.ok) {
-    const data = await getAnonymousToken();
-    if ('access_token' in data) {
-      saveAuthToken(data);
-    } else {
-      redirect('/login');
-    }
+    redirect('/login');
   }
+  return response.ok;
 }

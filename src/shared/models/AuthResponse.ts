@@ -1,3 +1,5 @@
+import { ResponseError } from './ResponseError';
+
 export interface AuthSuccess {
   access_token: string;
   expires_in: number;
@@ -6,15 +8,4 @@ export interface AuthSuccess {
   refresh_token: string;
 }
 
-export interface AuthError {
-  statusCode: number;
-  message: string;
-  errors: {
-    code: string;
-    message: string;
-  }[];
-  error: string;
-  error_description: string;
-}
-
-export type AuthResponse = AuthSuccess | AuthError;
+export type AuthResponse = AuthSuccess | ResponseError;

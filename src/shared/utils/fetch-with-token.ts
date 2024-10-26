@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { AuthError } from '../models/AuthResponse';
+import { ResponseError } from '../models/ResponseError';
 import getAnonymousToken from './get-anonymous-token';
 import saveAuthToken from './save-auth-token';
 
@@ -7,7 +7,7 @@ export default async function fetchWithToken<T>(
   input: RequestInfo | URL,
   options: RequestInit = {},
   reserveAction?: () => Promise<void | boolean>
-): Promise<T | AuthError> {
+): Promise<T | ResponseError> {
   let token = cookies().get('access_token');
   if (!token?.value) {
     const newTokens = await getAnonymousToken();
@@ -30,9 +30,8 @@ export default async function fetchWithToken<T>(
   } else {
     return result;
   }
-  console.log('RESULT');
 
   const repeatedRequest = await fetch(input, options);
-  const repeatedResult = await repeatedRequest.json();
+  const repeatedResult: T = await repeatedRequest.json();
   return repeatedResult;
 }

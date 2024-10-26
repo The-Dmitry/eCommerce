@@ -11,6 +11,7 @@
   "parser": "@typescript-eslint/parser",
   "rules": {
     "tailwindcss/classnames-order": "off",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-console": "warn"
   }
 }

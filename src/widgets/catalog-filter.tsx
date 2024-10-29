@@ -1,5 +1,5 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent } from 'react';
 import CatalogSubcategory from '../features/catalog-subcategory';
 import { ProductCategories } from '../shared/models/ProductCategories';
@@ -10,7 +10,6 @@ interface Props {
 
 export default function CatalogFilter({ data }: Props) {
   const router = useRouter();
-  const path = usePathname();
   const params = useSearchParams();
   const currentParams = new Set(Array.from(params.values()));
 
@@ -43,11 +42,11 @@ export default function CatalogFilter({ data }: Props) {
         v.name['en-US'] in result &&
         params.append('filter', encodeURIComponent(v.id))
     );
-    router.push(`${path}?${params.toString()}`);
+    router.push(`?${params.toString()}`);
   };
 
   return (
-    <aside>
+    <aside className='min-w-52'>
       <form onSubmit={handleSubmit}>
         {categories.map((v) => (
           <CatalogSubcategory

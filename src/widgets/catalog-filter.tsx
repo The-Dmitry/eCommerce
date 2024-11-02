@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent } from 'react';
 import CatalogSubcategory from '../features/catalog-subcategory';
+import sortingTypes from '../shared/constants/sorting-types';
 import { ProductCategories } from '../shared/models/ProductCategories';
 
 interface Props {
@@ -36,18 +37,29 @@ export default function CatalogFilter({ data }: Props) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const result = Object.fromEntries(form.entries());
+
     const params = new URLSearchParams();
     data.results.forEach(
       (v) =>
         v.name['en-US'] in result &&
         params.append('filter', encodeURIComponent(v.id))
     );
+    if ('sort' in result && result['sort']) {
+      params.set('sort', encodeURIComponent(result['sort'] as string));
+    }
     router.push(`?${params.toString()}`);
   };
 
   return (
     <aside className='min-w-52'>
       <form onSubmit={handleSubmit}>
+        <select name='sort'>
+          {Object.entries(sortingTypes).map(([value, data], index) => (
+            <option key={index} value={value}>
+              {data.text}
+            </option>
+          ))}
+        </select>
         {categories.map((v) => (
           <CatalogSubcategory
             currentParams={currentParams}

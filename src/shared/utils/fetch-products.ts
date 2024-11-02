@@ -1,3 +1,4 @@
+import sortingTypes from '../constants/sorting-types';
 import { ProductProjectionResponse } from '../models/ProductProjection';
 import fetchWithToken from './fetch-with-token';
 
@@ -6,7 +7,7 @@ function isStringNumeric(str: string | string[] | undefined) {
 }
 
 export default async function fetchProducts(
-  { filter, page, text }: Record<string, string | string[] | undefined>,
+  { filter, page, text, sort }: Record<string, string | string[] | undefined>,
   limit: number
 ) {
   const query = new URLSearchParams();
@@ -23,8 +24,17 @@ export default async function fetchProducts(
       .join(',');
     query.append('filter', `categories.id:${category}`);
   }
+  const stringSort = Array.isArray(sort) ? sort[0] : sort;
+  const decodedSort = stringSort ? decodeURIComponent(stringSort) : null;
+
+  if (decodedSort) {
+    if (decodedSort in sortingTypes) {
+      query.set('sort', sortingTypes[decodedSort].param);
+    }
+  }
   const data = await fetchWithToken<ProductProjectionResponse>(
     `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/search?${query.toString()}`
   );
+
   return data;
 }

@@ -1,8 +1,9 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent } from 'react';
-import CatalogSubcategory from '../features/catalog-subcategory';
-import sortingTypes from '../shared/constants/sorting-types';
+import CatalogSorting from '../features/catalog/catalog-sorting';
+import CatalogSubcategory from '../features/catalog/catalog-subcategory';
+import PriceRange from '../features/catalog/price-range';
 import { ProductCategories } from '../shared/models/ProductCategories';
 
 interface Props {
@@ -12,7 +13,9 @@ interface Props {
 export default function CatalogFilter({ data }: Props) {
   const router = useRouter();
   const params = useSearchParams();
-  const currentParams = new Set(Array.from(params.values()));
+  const currentParams = new Set(
+    Array.from(params.values(), (v) => decodeURIComponent(v))
+  );
 
   const categories = Object.entries(
     data.results.reduce(
@@ -47,19 +50,18 @@ export default function CatalogFilter({ data }: Props) {
     if ('sort' in result && result['sort']) {
       params.set('sort', encodeURIComponent(result['sort'] as string));
     }
+    if ('from' in result && result['from'])
+      params.set('from', result['from'] as string);
+    if ('to' in result && result['to'])
+      params.set('to', result['to'] as string);
+
     router.push(`?${params.toString()}`);
   };
 
   return (
     <aside className='min-w-52'>
       <form onSubmit={handleSubmit}>
-        <select name='sort'>
-          {Object.entries(sortingTypes).map(([value, data], index) => (
-            <option key={index} value={value}>
-              {data.text}
-            </option>
-          ))}
-        </select>
+        <CatalogSorting currentSort={params.get('sort')} />
         {categories.map((v) => (
           <CatalogSubcategory
             currentParams={currentParams}
@@ -67,6 +69,7 @@ export default function CatalogFilter({ data }: Props) {
             key={v[0]}
           />
         ))}
+        <PriceRange />
         <button type='submit'>Search</button>
       </form>
     </aside>

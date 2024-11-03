@@ -1,6 +1,7 @@
 'use server';
 
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
+import { ResponseError } from '@/src/shared/models/ResponseError';
 import UserData from '@/src/shared/models/UserData';
 import fetchWithToken from '@/src/shared/utils/fetch-with-token';
 import loginUser from '@/src/shared/utils/login-user';
@@ -10,7 +11,6 @@ import signupSchema, {
 } from '@/src/shared/utils/schemas/signupShema';
 import { cookies } from 'next/headers';
 import { ZodFormattedError } from 'zod';
-import { AuthError } from '../src/shared/models/AuthResponse';
 import loginSchema, {
   LoginData,
 } from '../src/shared/utils/schemas/loginSchema';
@@ -44,7 +44,7 @@ export async function createUser(
   }
   const { email, firstName, lastName, password } = obj as SignupData;
   const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/customers`;
-  const result = await fetchWithToken<NewCustomer<AuthError>>(URL, {
+  const result = await fetchWithToken<NewCustomer<ResponseError>>(URL, {
     method: 'POST',
     body: JSON.stringify({ email, firstName, lastName, password }),
   });
@@ -55,7 +55,7 @@ export async function createUser(
   return { auth: result.message, credentials: { _errors: [] } };
 }
 
-export async function getUserData(): Promise<UserData | AuthError | null> {
+export async function getUserData(): Promise<UserData | ResponseError> {
   const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me`;
   const result = await fetchWithToken<UserData>(
     URL,

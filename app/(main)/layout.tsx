@@ -8,8 +8,8 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
-      <footer>Footer</footer>
+      <main className='grow'>{children}</main>
+      <footer className='bg-slate-500 p-4 text-center'>Footer</footer>
     </>
   );
 }

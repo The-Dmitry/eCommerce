@@ -15,6 +15,7 @@ export default async function fetchProducts(
     sort,
     from,
     to,
+    discount,
   }: Record<string, string | string[] | undefined>,
   limit: number
 ) {
@@ -47,6 +48,10 @@ export default async function fetchProducts(
       'filter',
       `variants.price.centAmount:range (${priceFrom ? +priceFrom * 100 : 0} to ${priceTo ? +priceTo * 100 : 9999999})`
     );
+
+  if (discount) {
+    query.append('filter', `variants.prices.discounted:exists`);
+  }
   const data = await fetchWithToken<ProductProjectionResponse>(
     `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/search?${query.toString()}`
   );

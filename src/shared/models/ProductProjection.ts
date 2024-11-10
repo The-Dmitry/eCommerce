@@ -42,6 +42,20 @@ interface Description {
 interface Category {
   typeId: string;
   id: string;
+  obj: {
+    id: string;
+    key: string;
+    name: Name;
+    slug: Slug;
+    description: Description;
+    parent: {
+      obj: {
+        name: {
+          'en-US': string;
+        };
+      };
+    };
+  };
 }
 
 interface Slug {
@@ -68,7 +82,7 @@ interface MasterVariant {
 
 interface Attribute {
   name: string;
-  value: unknown;
+  value: string;
 }
 
 interface Image {

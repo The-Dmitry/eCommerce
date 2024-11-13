@@ -54,6 +54,7 @@ export default function CatalogFilter({ data }: Props) {
       params.set('from', result['from'] as string);
     if ('to' in result && result['to'])
       params.set('to', result['to'] as string);
+    if ('discount' in result) params.set('discount', 'true');
 
     router.push(`?${params.toString()}`);
   };
@@ -62,6 +63,14 @@ export default function CatalogFilter({ data }: Props) {
     <aside className='min-w-52'>
       <form onSubmit={handleSubmit}>
         <CatalogSorting currentSort={params.get('sort')} />
+        <label>
+          Discount only
+          <input
+            defaultChecked={!!params.get('discount')}
+            type='checkbox'
+            name='discount'
+          />
+        </label>
         {categories.map((v) => (
           <CatalogSubcategory
             currentParams={currentParams}

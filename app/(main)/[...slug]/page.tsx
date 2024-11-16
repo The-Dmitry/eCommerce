@@ -80,6 +80,7 @@ export default async function ProductPage({ params }: Props) {
             title='YouTube video player'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
             referrerPolicy='strict-origin-when-cross-origin'
+            allowFullScreen
           />
         </div>
         <p>{data.description['en-US']}</p>

@@ -9,13 +9,27 @@ interface Props {
 export default function ProductCard({ data }: Props) {
   const { name, masterVariant } = data;
   const price = convertToUsd(data.masterVariant.prices[0].value.centAmount);
+  const discountedPrice = convertToUsd(
+    data.masterVariant.prices[0].discounted?.value.centAmount
+  );
+
   return (
-    <article className='flex w-60 flex-col'>
-      <img src={masterVariant.images[0].url} alt={name['en-US']} />
-      <h3>{name['en-US']}</h3>
-      <p>Price: {price}</p>
-      <Link href={`./${data.id}`}>Page</Link>
-      <button>Buy</button>
-    </article>
+    <li className='group relative'>
+      <img
+        src={masterVariant.images[0].url}
+        alt={name['en-US']}
+        className='aspect-[1/1.15] w-full rounded-md object-cover duration-150 hover:transition-all group-hover:brightness-110'
+      />
+      <h3 className=''>{name['en-US']}</h3>
+      <div className='flex items-center gap-2'>
+        <p
+          className={`${discountedPrice ? 'text-sm text-gray-400 line-through' : ''}`}
+        >
+          {price}
+        </p>
+        {discountedPrice && <p className='text-white'>{discountedPrice}</p>}
+      </div>
+      <Link className='absolute inset-0' href={`./${data.id}`} />
+    </li>
   );
 }

@@ -8,7 +8,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main className='grow'>{children}</main>
+      <main className='mx-auto w-full max-w-screen-xl p-4'>{children}</main>
       <footer className='bg-slate-500 p-4 text-center'>Footer</footer>
     </>
   );

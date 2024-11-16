@@ -13,7 +13,7 @@ export default async function CatalogLayout({
   return (
     <>
       {isDataCorrect ? (
-        <div className='flex h-full'>
+        <div className='flex gap-3'>
           <CatalogFilter data={data} />
           {children}
         </div>

@@ -17,10 +17,10 @@ export default async function CatalogList({
   }
 
   return (
-    <div className='flex flex-wrap gap-3'>
+    <ul className='grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] gap-2'>
       {data.results.map((card) => (
         <ProductCard data={card} key={card.id} />
       ))}
-    </div>
+    </ul>
   );
 }

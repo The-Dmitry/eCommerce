@@ -22,9 +22,9 @@ export default async function CatalogPage({
   }
 
   return (
-    <section className='flex h-full flex-col'>
+    <section className='flex size-full flex-col'>
       <CatalogSearch />
-      <div className='flex grow flex-col'>
+      <div className='flex w-full flex-col'>
         <Suspense
           key={JSON.stringify(params)}
           fallback={<div>Loading ...</div>}

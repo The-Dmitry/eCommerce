@@ -60,7 +60,7 @@ export default function CatalogFilter({ data }: Props) {
   };
 
   return (
-    <aside className='min-w-52'>
+    <aside className='w-full max-w-52'>
       <form onSubmit={handleSubmit}>
         <CatalogSorting currentSort={params.get('sort')} />
         <label>

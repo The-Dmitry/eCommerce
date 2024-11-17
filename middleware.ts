@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { Routes } from './src/shared/constants/routes';
 import getAnonymousToken from './src/shared/utils/get-anonymous-token';
 
-const routes = ['/login', '/signup'];
+const routes = [Routes.SIGN_IN, Routes.SING_UP];
 
 export async function middleware(req: NextRequest) {
   const [token, refreshToken, userType] = [
@@ -10,7 +11,10 @@ export async function middleware(req: NextRequest) {
     req.cookies.get('user_type'),
   ];
 
-  if (userType?.value === '' && routes.includes(req.nextUrl.pathname)) {
+  if (
+    userType?.value === '' &&
+    routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
+  ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 

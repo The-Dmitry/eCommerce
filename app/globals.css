@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .form-input {
+    @apply w-full rounded-md border-2 border-current bg-transparent px-1 text-center text-2xl text-inherit focus:border-yellow-500 focus:outline-none;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -9,7 +15,7 @@
 
 html,
 body {
-  min-height: 100%;
+  height: 100%;
 }
 
 body {

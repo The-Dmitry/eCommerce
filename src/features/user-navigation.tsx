@@ -1,5 +1,6 @@
 import { getUserData } from '@/app/actions';
 import Link from 'next/link';
+import { Routes } from '../shared/constants/routes';
 import LogoutButton from './logout-button';
 
 export default async function UserNavigation() {
@@ -17,11 +18,11 @@ export default async function UserNavigation() {
         </>
       ) : (
         <>
-          <Link href={'/login'}>Login</Link>
-          <Link href={'/signup'}>Registration</Link>
+          <Link href={Routes.SIGN_IN}>Login</Link>
+          <Link href={Routes.SING_UP}>Registration</Link>
         </>
       )}
-      <Link href={'/cart'}>Cart</Link>
+      <Link href={Routes.CART}>Cart</Link>
     </div>
   );
 }

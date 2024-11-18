@@ -11,7 +11,7 @@ export default function LoginForm() {
   const passwordError = errors?.credentials.password?._errors[0];
 
   return (
-    <div className='w-full max-w-72 pb-10 text-orange-400'>
+    <div className='w-full max-w-72 pb-10 text-orange-500'>
       <Form action={func} className='gap-4'>
         <Form.Text placeholder='Email' name='email' hasError={!!emailError}>
           <Form.Error text={emailError} />
@@ -23,9 +23,7 @@ export default function LoginForm() {
         >
           <Form.Error text={passwordError} />
         </Form.Password>
-        <SubmitButton className='bg-orange-400 hover:bg-orange-500'>
-          Sign In
-        </SubmitButton>
+        <SubmitButton>Sign In</SubmitButton>
       </Form>
       <Form.Error text={errors?.auth} className='mt-5' />
     </div>

@@ -18,8 +18,8 @@ export default async function UserNavigation() {
         </>
       ) : (
         <>
-          <Link href={Routes.SIGN_IN}>Login</Link>
-          <Link href={Routes.SING_UP}>Registration</Link>
+          <Link href={Routes.SIGN_IN}>Sign In</Link>
+          <Link href={Routes.SING_UP}>Sign Up</Link>
         </>
       )}
       <Link href={Routes.CART}>Cart</Link>

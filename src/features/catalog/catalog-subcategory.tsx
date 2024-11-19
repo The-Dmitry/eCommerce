@@ -1,3 +1,4 @@
+import Checkbox from './checkbox';
 interface Props {
   data: [string, string[][]];
   currentParams: Set<string>;
@@ -5,18 +6,14 @@ interface Props {
 
 export default function CatalogSubcategory({ data, currentParams }: Props) {
   const [category, list] = data;
+
   return (
     <fieldset className='flex flex-col'>
-      <legend>{category}</legend>
+      <legend className='text-center text-lg capitalize text-orange-500'>
+        {category}
+      </legend>
       {list.map(([id, name]) => (
-        <label key={id}>
-          <input
-            defaultChecked={currentParams.has(id)}
-            type='checkbox'
-            name={name}
-          />
-          {name}
-        </label>
+        <Checkbox key={id} name={name} isChecked={currentParams.has(id)} />
       ))}
     </fieldset>
   );

@@ -1,3 +1,4 @@
+import CatalogSearch from '@/src/features/catalog/catalog-search';
 import fetchProductCategories from '@/src/shared/utils/fetch-product-categories';
 import CatalogFilter from '@/src/widgets/catalog-filter';
 
@@ -13,9 +14,12 @@ export default async function CatalogLayout({
   return (
     <>
       {isDataCorrect ? (
-        <div className='flex gap-3'>
+        <div className='flex h-full gap-3'>
           <CatalogFilter data={data} />
-          {children}
+          <section className='flex size-full h-full flex-col gap-3'>
+            <CatalogSearch />
+            {children}
+          </section>
         </div>
       ) : (
         <div>Incorrect Data</div>

@@ -6,15 +6,19 @@ interface Props {
 
 export default function CatalogSorting({ currentSort }: Props) {
   return (
-    <select
-      name='sort'
-      defaultValue={currentSort ? decodeURIComponent(currentSort) : ''}
-    >
-      {Object.entries(sortingTypes).map(([value, data], index) => (
-        <option key={index} value={value}>
-          {data.text}
-        </option>
-      ))}
-    </select>
+    <div className='flex gap-1 text-orange-500'>
+      <p>Sorting:</p>
+      <select
+        name='sort'
+        defaultValue={currentSort ? decodeURIComponent(currentSort) : ''}
+        className='bg-transparent'
+      >
+        {Object.entries(sortingTypes).map(([value, data], index) => (
+          <option key={index} value={value} className='bg-neutral-900'>
+            {data.text}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }

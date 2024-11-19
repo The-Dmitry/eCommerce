@@ -1,4 +1,3 @@
-import CatalogSearch from '@/src/features/catalog/catalog-search';
 import Pagination from '@/src/features/pagination';
 import fetchProducts from '@/src/shared/utils/fetch-products';
 import CatalogList from '@/src/widgets/catalog-list';
@@ -22,9 +21,8 @@ export default async function CatalogPage({
   }
 
   return (
-    <section className='flex size-full flex-col'>
-      <CatalogSearch />
-      <div className='flex w-full flex-col'>
+    <>
+      <div className='h-full'>
         <Suspense
           key={JSON.stringify(params)}
           fallback={<div>Loading ...</div>}
@@ -32,7 +30,8 @@ export default async function CatalogPage({
           <CatalogList searchParams={params} />
         </Suspense>
       </div>
+
       <Pagination limit={data.limit} total={data.total} />
-    </section>
+    </>
   );
 }

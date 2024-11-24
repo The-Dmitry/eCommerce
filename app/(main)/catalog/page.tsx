@@ -1,4 +1,5 @@
 import Pagination from '@/src/features/pagination';
+import Spinner from '@/src/shared/ui/spinner';
 import fetchProducts from '@/src/shared/utils/api/fetch-products';
 import CatalogList from '@/src/widgets/catalog-list';
 import { Metadata } from 'next';
@@ -25,7 +26,11 @@ export default async function CatalogPage({
       <div className='h-full'>
         <Suspense
           key={JSON.stringify(params)}
-          fallback={<div>Loading ...</div>}
+          fallback={
+            <div className='flex h-full items-center justify-center'>
+              <Spinner />
+            </div>
+          }
         >
           <CatalogList searchParams={params} />
         </Suspense>

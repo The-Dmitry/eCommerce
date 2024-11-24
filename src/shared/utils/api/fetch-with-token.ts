@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
-import { ResponseError } from '../models/ResponseError';
+import { ResponseError } from '../../models/ResponseError';
+import saveAuthToken from '../save-auth-token';
 import getAnonymousToken from './get-anonymous-token';
-import saveAuthToken from './save-auth-token';
 
 export default async function fetchWithToken<T>(
   input: RequestInfo | URL,

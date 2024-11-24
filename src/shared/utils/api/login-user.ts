@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { AuthResponse } from '../models/AuthResponse';
-import saveAuthToken from './save-auth-token';
+import { AuthResponse } from '../../models/AuthResponse';
+import saveAuthToken from '../save-auth-token';
 
 export default async function loginUser(email: string, password: string) {
   const token = btoa(

@@ -1,5 +1,5 @@
+import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
 import convertToUsd from '@/src/shared/utils/convert-to-usd';
-import fetchProductById from '@/src/shared/utils/fetch-product-by-id';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';

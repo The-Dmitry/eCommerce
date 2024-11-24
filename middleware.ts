@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { Routes } from './src/shared/constants/routes';
-import getAnonymousToken from './src/shared/utils/get-anonymous-token';
+import getAnonymousToken from './src/shared/utils/api/get-anonymous-token';
 
 const routes = [Routes.SIGN_IN, Routes.SING_UP];
 

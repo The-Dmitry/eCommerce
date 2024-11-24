@@ -1,5 +1,5 @@
 import ProductCard from '../features/product-card';
-import fetchProducts from '../shared/utils/fetch-products';
+import fetchProducts from '../shared/utils/api/fetch-products';
 
 export default async function CatalogList({
   searchParams,

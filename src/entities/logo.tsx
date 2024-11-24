@@ -5,7 +5,13 @@ import { Routes } from '../shared/constants/routes';
 export default function Logo({ size = 50 }: { size?: number }) {
   return (
     <Link href={Routes.MAIN}>
-      <Image src={'/logo.png'} width={size} height={size} alt='kek' />
+      <Image
+        src={'/logo.png'}
+        width={size}
+        height={size}
+        alt='kek'
+        className='transition-all hover:brightness-110'
+      />
     </Link>
   );
 }

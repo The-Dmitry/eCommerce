@@ -1,5 +1,5 @@
 import CatalogSearch from '@/src/features/catalog/catalog-search';
-import fetchProductCategories from '@/src/shared/utils/fetch-product-categories';
+import fetchProductCategories from '@/src/shared/utils/api/fetch-product-categories';
 import CatalogFilter from '@/src/widgets/catalog-filter';
 
 export default async function CatalogLayout({

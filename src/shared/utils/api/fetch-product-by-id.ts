@@ -1,4 +1,4 @@
-import { ProductProjection } from '../models/ProductProjection';
+import { ProductProjection } from '../../models/ProductProjection';
 import fetchWithToken from './fetch-with-token';
 
 export default async function fetchProductById(productId: string) {

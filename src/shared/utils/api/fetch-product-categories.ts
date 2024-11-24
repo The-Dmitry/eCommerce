@@ -1,4 +1,4 @@
-import { ProductCategories } from '../models/ProductCategories';
+import { ProductCategories } from '../../models/ProductCategories';
 import fetchWithToken from './fetch-with-token';
 
 export default async function fetchProductCategories() {

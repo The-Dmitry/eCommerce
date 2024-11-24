@@ -19,5 +19,10 @@ const config: Config = {
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      backgroundOpacity: ['active'],
+    },
+  },
 };
 export default config;

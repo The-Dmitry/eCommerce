@@ -1,5 +1,5 @@
 import Pagination from '@/src/features/pagination';
-import fetchProducts from '@/src/shared/utils/fetch-products';
+import fetchProducts from '@/src/shared/utils/api/fetch-products';
 import CatalogList from '@/src/widgets/catalog-list';
 import { Metadata } from 'next';
 import { Suspense } from 'react';

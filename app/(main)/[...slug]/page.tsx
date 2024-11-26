@@ -1,6 +1,7 @@
 import Price from '@/src/features/price';
 import Button from '@/src/shared/ui/button';
 import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
+import ImageSlider from '@/src/widgets/image-slider';
 import Video from '@/src/widgets/video';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -38,6 +39,8 @@ export default async function ProductPage({ params }: Props) {
     );
   }
 
+  const images = data.masterVariant.images;
+
   const categories = data.categories.reduce(
     (acc, v) => {
       const [title, subTitle] = [
@@ -55,7 +58,7 @@ export default async function ProductPage({ params }: Props) {
   );
 
   return (
-    <div className='gap-4 md:flex'>
+    <div className='flex flex-col gap-4 md:flex-row'>
       <aside className='flex shrink-0 flex-col items-center gap-4 md:w-80'>
         <div className='relative aspect-square w-full max-w-80 select-none'>
           <img
@@ -80,7 +83,7 @@ export default async function ProductPage({ params }: Props) {
           return (
             <div className='w-full' key={key}>
               <h3 className='mb-2 text-center text-lg'>{key}:</h3>
-              <ul className='flex flex-wrap items-start gap-3'>
+              <ul className='flex flex-wrap justify-center gap-3 md:justify-start'>
                 {arr.map((v) => (
                   <li
                     className='rounded-md bg-orange-500 px-2 py-1 text-black'
@@ -94,9 +97,10 @@ export default async function ProductPage({ params }: Props) {
           );
         })}
       </aside>
-      <section className='flex flex-col gap-4'>
+      <section className='grid gap-4'>
         <Video src={data.masterVariant.attributes[0].value} />
         <article>{data.description['en-US']}</article>
+        <ImageSlider list={images} />
       </section>
     </div>
   );

@@ -1,26 +1,26 @@
 import Logo from '@/src/entities/logo';
-import SignupForm from '@/src/features/signup-form';
+import LoginForm from '@/src/features/login-form';
 import { Routes } from '@/src/shared/constants/routes';
 
 import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Sign Up',
+  title: 'Sign In',
 };
 
-export default function SignUp() {
+export default function Login() {
   return (
     <div className='flex flex-auto flex-col items-center justify-center gap-8 p-4'>
       <Logo size={70} />
-      <SignupForm />
+      <LoginForm />
       <div className='flex gap-1 text-orange-500'>
-        <span>Already have an account?</span>
+        <span>No account yet?</span>
         <Link
-          href={Routes.SIGN_IN}
+          href={Routes.SING_UP}
           className='text-white underline transition-all hover:text-orange-300'
         >
-          SIgn In
+          SIgn Up
         </Link>
       </div>
     </div>

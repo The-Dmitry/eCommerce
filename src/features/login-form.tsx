@@ -2,6 +2,7 @@
 import { authQuery } from '@/app/actions';
 import { useFormState } from 'react-dom';
 import SubmitButton from '../shared/ui/submit-button';
+import Form from './form/form';
 
 export default function LoginForm() {
   const [errors, func] = useFormState(authQuery, null);
@@ -10,19 +11,21 @@ export default function LoginForm() {
   const passwordError = errors?.credentials.password?._errors[0];
 
   return (
-    <form className='flex flex-col gap-2' action={func}>
-      <label className='flex flex-col text-center'>
-        Email
-        <input type='text' name='email' />
-      </label>
-      {emailError && <p>{emailError}</p>}
-      <label className='flex flex-col text-center'>
-        Password
-        <input type='password' name='password' />
-      </label>
-      {passwordError && <p>{passwordError}</p>}
-      {errors?.auth && <p className='text-xl text-red-600'>{errors.auth}</p>}
-      <SubmitButton />
-    </form>
+    <div className='w-full max-w-72 pb-10 text-orange-500'>
+      <Form action={func} className='gap-4'>
+        <Form.Text placeholder='Email' name='email' hasError={!!emailError}>
+          <Form.Error text={emailError} />
+        </Form.Text>
+        <Form.Password
+          placeholder='Password'
+          name='password'
+          hasError={!!passwordError}
+        >
+          <Form.Error text={passwordError} />
+        </Form.Password>
+        <SubmitButton>Sign In</SubmitButton>
+      </Form>
+      <Form.Error text={errors?.auth} className='mt-5' />
+    </div>
   );
 }

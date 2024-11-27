@@ -2,6 +2,7 @@
 import { createUser } from '@/app/actions';
 import { useFormState } from 'react-dom';
 import SubmitButton from '../shared/ui/submit-button';
+import Form from './form/form';
 
 export default function SignupForm() {
   const [errors, func] = useFormState(createUser, null);
@@ -10,31 +11,47 @@ export default function SignupForm() {
   const passwordError = errors?.credentials.password?._errors[0];
   const firstName = errors?.credentials.firstName?._errors[0];
   const lastName = errors?.credentials.lastName?._errors[0];
+  const confirmPassword = errors?.credentials.confirmPassword?._errors[0];
 
   return (
-    <form className='flex flex-col gap-2' action={func}>
-      <label className='flex flex-col text-center'>
-        Email
-        <input type='text' name='email' />
-      </label>
-      {emailError && <p>{emailError}</p>}
-      <label className='flex flex-col text-center'>
-        First Name
-        <input type='text' name='firstName' />
-      </label>
-      {firstName && <p>{firstName}</p>}
-      <label className='flex flex-col text-center'>
-        Last Name
-        <input type='text' name='lastName' />
-      </label>
-      {lastName && <p>{lastName}</p>}
-      <label className='flex flex-col text-center'>
-        Password
-        <input type='password' name='password' />
-      </label>
-      {passwordError && <p>{passwordError}</p>}
-      {errors?.auth && <p className='text-xl text-red-600'>{errors.auth}</p>}
-      <SubmitButton />
-    </form>
+    <div className='w-full max-w-72 pb-10 text-orange-500'>
+      <Form action={func}>
+        <Form.Text placeholder='Email' name='email' hasError={!!emailError}>
+          <Form.Error text={emailError} />
+        </Form.Text>
+        <Form.Text
+          placeholder='First Name'
+          name='firstName'
+          hasError={!!firstName}
+          autoComplete='off'
+        >
+          <Form.Error text={firstName} />
+        </Form.Text>
+        <Form.Text
+          placeholder='Last Name'
+          name='lastName'
+          hasError={!!lastName}
+          autoComplete='off'
+        >
+          <Form.Error text={lastName} />
+        </Form.Text>
+        <Form.Password
+          placeholder='Password'
+          name='password'
+          hasError={!!passwordError}
+        >
+          <Form.Error text={passwordError} />
+        </Form.Password>
+        <Form.Password
+          placeholder='Confirm Password'
+          name='confirmPassword'
+          hasError={!!passwordError}
+        >
+          <Form.Error text={confirmPassword} />
+        </Form.Password>
+        <SubmitButton>Sign Up</SubmitButton>
+      </Form>
+      <Form.Error text={errors?.auth} className='mt-5' />
+    </div>
   );
 }

@@ -1,7 +1,7 @@
-import sortingTypes from '../constants/sorting-types';
-import { ProductProjectionResponse } from '../models/ProductProjection';
+import sortingTypes from '../../constants/sorting-types';
+import { ProductProjectionResponse } from '../../models/ProductProjection';
+import isInteger from '../is-integer';
 import fetchWithToken from './fetch-with-token';
-import isInteger from './is-integer';
 
 function isStringNumeric(str: string | string[] | undefined) {
   return !isNaN(Number(str));
@@ -19,7 +19,10 @@ export default async function fetchProducts(
   }: Record<string, string | string[] | undefined>,
   limit: number
 ) {
-  const query = new URLSearchParams();
+  const query = new URLSearchParams({
+    staged: 'true',
+    expand: 'categories[*].parent',
+  });
   query.set('limit', `${limit}`);
   if (page) {
     query.set('offset', `${isStringNumeric(page) ? (+page - 1) * limit : '0'}`);

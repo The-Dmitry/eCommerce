@@ -7,6 +7,9 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       colors: {
@@ -16,5 +19,10 @@ const config: Config = {
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      backgroundOpacity: ['active'],
+    },
+  },
 };
 export default config;

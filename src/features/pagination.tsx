@@ -1,5 +1,15 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  AiOutlineDoubleLeft,
+  AiOutlineDoubleRight,
+  AiOutlineLeft,
+  AiOutlineRight,
+} from 'react-icons/ai';
+
+import { useMemo } from 'react';
+import Button from '../shared/ui/button';
+import calculatePagination from '../shared/utils/calculate-pagination';
 import modifySearchParams from '../shared/utils/modify-search-params';
 
 interface Props {
@@ -7,12 +17,19 @@ interface Props {
   limit: number;
 }
 
+const BUTTON_STYLE = 'aspect-square h-8 p-0';
+
 export default function Pagination({ total, limit }: Props) {
   const params = useSearchParams();
   const router = useRouter();
 
   const currentPage = +(params.get('page') || 1);
   const totalPages = new Array(Math.ceil(total / limit)).fill(1);
+
+  const pagesForRender = useMemo(
+    () => calculatePagination(totalPages.length, currentPage),
+    [totalPages, currentPage]
+  );
 
   const switchPage = (pageNum: number) => {
     const newParams = modifySearchParams(
@@ -24,16 +41,46 @@ export default function Pagination({ total, limit }: Props) {
   };
 
   return (
-    <nav className='flex gap-4'>
-      {totalPages.map((_, index) => (
-        <button
-          key={index}
-          onClick={() => switchPage(index + 1)}
-          disabled={currentPage === index + 1}
+    <nav className='mx-auto mt-3 flex gap-4'>
+      <Button
+        className={BUTTON_STYLE}
+        disabled={currentPage === 1}
+        onClick={() => switchPage(1)}
+      >
+        <AiOutlineDoubleLeft />
+      </Button>
+      <Button
+        className={BUTTON_STYLE}
+        disabled={currentPage === 1}
+        onClick={() => switchPage(currentPage - 1)}
+      >
+        <AiOutlineLeft />
+      </Button>
+
+      {pagesForRender.map((v) => (
+        <Button
+          key={v}
+          onClick={() => switchPage(v)}
+          disabled={currentPage === v}
+          className={BUTTON_STYLE}
         >
-          {index + 1}
-        </button>
+          {v}
+        </Button>
       ))}
+      <Button
+        className={BUTTON_STYLE}
+        disabled={currentPage === totalPages.length}
+        onClick={() => switchPage(currentPage + 1)}
+      >
+        <AiOutlineRight />
+      </Button>
+      <Button
+        className={BUTTON_STYLE}
+        disabled={currentPage === totalPages.length}
+        onClick={() => switchPage(totalPages.length)}
+      >
+        <AiOutlineDoubleRight />
+      </Button>
     </nav>
   );
 }

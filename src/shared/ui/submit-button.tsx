@@ -1,10 +1,16 @@
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { useFormStatus } from 'react-dom';
+import Button from './button';
 
-export default function SubmitButton() {
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+  children: ReactNode | string;
+}
+
+export default function SubmitButton({ children, ...rest }: Props) {
   const { pending } = useFormStatus();
   return (
-    <button type='submit' disabled={pending} className='disabled:text-red-700'>
-      Submit
-    </button>
+    <Button type='submit' disabled={pending} {...rest}>
+      {children}
+    </Button>
   );
 }

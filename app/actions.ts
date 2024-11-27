@@ -3,9 +3,8 @@
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
 import { ResponseError } from '@/src/shared/models/ResponseError';
 import UserData from '@/src/shared/models/UserData';
-import fetchWithToken from '@/src/shared/utils/fetch-with-token';
-import loginUser from '@/src/shared/utils/login-user';
-import revokeToken from '@/src/shared/utils/revoke-token';
+import loginUser from '@/src/shared/utils/api/login-user';
+import revokeToken from '@/src/shared/utils/api/revoke-token';
 import signupSchema, {
   SignupData,
 } from '@/src/shared/utils/schemas/signupShema';
@@ -14,6 +13,7 @@ import { ZodFormattedError } from 'zod';
 import loginSchema, {
   LoginData,
 } from '../src/shared/utils/schemas/loginSchema';
+import fetchWithToken from '@/src/shared/utils/api/fetch-with-token';
 
 interface AuthResult<T extends LoginData | SignupData> {
   auth?: string;

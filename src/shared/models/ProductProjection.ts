@@ -99,6 +99,18 @@ interface Price {
   id: string;
   value: Value;
   key?: string;
+  discounted?: {
+    value: {
+      type: string;
+      currencyCode: string;
+      centAmount: number;
+      fractionDigits: number;
+    };
+    discount: {
+      typeId: string;
+      id: string;
+    };
+  };
 }
 
 interface Value {

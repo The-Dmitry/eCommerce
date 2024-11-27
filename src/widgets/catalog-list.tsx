@@ -1,5 +1,5 @@
 import ProductCard from '../features/product-card';
-import fetchProducts from '../shared/utils/fetch-products';
+import fetchProducts from '../shared/utils/api/fetch-products';
 
 export default async function CatalogList({
   searchParams,
@@ -17,10 +17,10 @@ export default async function CatalogList({
   }
 
   return (
-    <div className='flex flex-wrap gap-3'>
+    <ul className='grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] gap-2'>
       {data.results.map((card) => (
         <ProductCard data={card} key={card.id} />
       ))}
-    </div>
+    </ul>
   );
 }

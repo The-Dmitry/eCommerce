@@ -1,5 +1,5 @@
 import Price from '@/src/features/price';
-import Button from '@/src/shared/ui/button';
+import ProductPageButton from '@/src/features/product-page-button';
 import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
 import ImageSlider from '@/src/widgets/image-slider';
 import Video from '@/src/widgets/video';
@@ -11,12 +11,21 @@ interface Props {
   params: Promise<{ slug: [string, string] }>;
 }
 
+// export async function generateStaticParams() {
+//   const products = await fetchStaticParams();
+//   console.log('PAGES GENERATED', products.results.length);
+
+//   return products.results.map((product) => ({
+//     params: ['catalog', product.id],
+//   }));
+// }
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];
   const data = await fetchProductById(product);
 
   return {
-    title: 'errors' in data ? 'Page not found' : data.name['en-US'],
+    title: !data || 'errors' in data ? 'Page not found' : data.name['en-US'],
   };
 }
 
@@ -30,16 +39,16 @@ export default async function ProductPage({ params }: Props) {
   }
 
   const data = await fetchProductById(productId);
-  if ('errors' in data) {
+  if (!data || 'errors' in data) {
     return (
       <>
-        <div>Not FOund</div>
+        <div>Not Found</div>
         <Link href='/catalog'>To Catalog</Link>
       </>
     );
   }
 
-  const images = data.masterVariant.images;
+  const { images, id } = data.masterVariant;
 
   const categories = data.categories.reduce(
     (acc, v) => {
@@ -62,7 +71,7 @@ export default async function ProductPage({ params }: Props) {
       <aside className='flex shrink-0 flex-col items-center gap-4 md:w-80'>
         <div className='relative aspect-square w-full max-w-80 select-none'>
           <img
-            src={data.masterVariant.images[0].url}
+            src={images[0].url}
             alt={data.name['en-US']}
             className='inset-0 size-full object-cover'
           />
@@ -78,7 +87,7 @@ export default async function ProductPage({ params }: Props) {
           price={data.masterVariant.prices[0].value.centAmount}
           variant='large'
         />
-        <Button>Add to cart</Button>
+        <ProductPageButton productId={data.id} variantId={id} />
         {Object.entries(categories).map(([key, arr]) => {
           return (
             <div className='w-full' key={key}>

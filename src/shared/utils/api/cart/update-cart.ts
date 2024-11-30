@@ -1,0 +1,34 @@
+import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import { CartData } from '@/src/shared/models/CartData';
+import { cookies } from 'next/headers';
+import fetchWithToken from '../fetch-with-token';
+import { createCart } from './create-cart';
+
+export default async function updateCart(body: string) {
+  let cartId = cookies().get(COOKIES_DATA.CART_ID)?.value;
+
+  if (!cartId) {
+    const newCart = await createCart();
+
+    if ('id' in newCart) {
+      cartId = newCart.id;
+    }
+  }
+
+  const result = await fetchWithToken<CartData>(
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+    {
+      method: 'POST',
+      body,
+    }
+  );
+
+  if ('errors' in result) {
+    throw new Error(`Failed to add product to cart: ${result.message}`);
+  }
+
+  const { version } = result;
+  cookies().set(COOKIES_DATA.CART_VERSION, `${version}`);
+
+  return result;
+}

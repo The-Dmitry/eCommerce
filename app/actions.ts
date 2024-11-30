@@ -1,8 +1,12 @@
 'use server';
 
+import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import NewCartItemData from '@/src/shared/models/new-cart-item-data';
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
 import { ResponseError } from '@/src/shared/models/ResponseError';
 import UserData from '@/src/shared/models/UserData';
+import updateCart from '@/src/shared/utils/api/cart/update-cart';
+import fetchWithToken from '@/src/shared/utils/api/fetch-with-token';
 import loginUser from '@/src/shared/utils/api/login-user';
 import revokeToken from '@/src/shared/utils/api/revoke-token';
 import signupSchema, {
@@ -13,7 +17,6 @@ import { ZodFormattedError } from 'zod';
 import loginSchema, {
   LoginData,
 } from '../src/shared/utils/schemas/loginSchema';
-import fetchWithToken from '@/src/shared/utils/api/fetch-with-token';
 
 interface AuthResult<T extends LoginData | SignupData> {
   auth?: string;
@@ -78,4 +81,26 @@ export async function logOut() {
       path: '/',
     });
   });
+}
+
+export async function addProductToCart({
+  productId,
+  variantId,
+  quantity = 1,
+}: NewCartItemData) {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const body = JSON.stringify({
+    version: version ? +version : 1, // Current cart version
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: productId,
+        variantId: variantId,
+        quantity: quantity,
+      },
+    ],
+  });
+  const result = await updateCart(body);
+
+  return result;
 }

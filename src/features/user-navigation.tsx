@@ -1,6 +1,7 @@
 import { getUserData } from '@/app/actions';
 import Link from 'next/link';
 import { Routes } from '../shared/constants/routes';
+import CartButton from './cart-button';
 import LogoutButton from './logout-button';
 
 export default async function UserNavigation() {
@@ -8,7 +9,7 @@ export default async function UserNavigation() {
   const isRegisteredUser = data && 'firstName' in data;
 
   return (
-    <div className='flex gap-2'>
+    <div className='flex items-center gap-2'>
       {isRegisteredUser ? (
         <>
           <p>
@@ -22,7 +23,7 @@ export default async function UserNavigation() {
           <Link href={Routes.SING_UP}>Sign Up</Link>
         </>
       )}
-      <Link href={Routes.CART}>Cart</Link>
+      <CartButton />
     </div>
   );
 }

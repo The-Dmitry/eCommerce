@@ -36,7 +36,7 @@ export default function CatalogSearch() {
         placeholder='Search...'
       />
       <button type='submit' className='px-2 text-4xl'>
-        <AiOutlineSearch />
+        <AiOutlineSearch className='transition-all hover:text-orange-400' />
       </button>
     </form>
   );

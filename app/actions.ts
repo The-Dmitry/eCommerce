@@ -90,7 +90,7 @@ export async function addProductToCart({
 }: NewCartItemData) {
   const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
   const body = JSON.stringify({
-    version: version ? +version : 1, // Current cart version
+    version: version ? +version : 1,
     actions: [
       {
         action: 'addLineItem',
@@ -100,6 +100,31 @@ export async function addProductToCart({
       },
     ],
   });
+
+  const result = await updateCart(body);
+
+  return result;
+}
+
+export async function removeProductFromCart({
+  lineItemId,
+  quantity = 1,
+}: {
+  lineItemId: string;
+  quantity: number;
+}) {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const body = JSON.stringify({
+    version: version ? +version : 1,
+    actions: [
+      {
+        action: 'removeLineItem',
+        lineItemId: lineItemId,
+        quantity,
+      },
+    ],
+  });
+
   const result = await updateCart(body);
 
   return result;

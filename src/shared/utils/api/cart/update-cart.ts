@@ -16,7 +16,7 @@ export default async function updateCart(body: string) {
   }
 
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${cartId}`,
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${cartId}`,
     {
       method: 'POST',
       body,
@@ -24,7 +24,7 @@ export default async function updateCart(body: string) {
   );
 
   if ('errors' in result) {
-    throw new Error(`Failed to add product to cart: ${result.message}`);
+    throw new Error(`Updating cart is failed: ${result.message}`);
   }
 
   const { version } = result;

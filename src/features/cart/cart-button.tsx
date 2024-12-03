@@ -1,7 +1,7 @@
+import { Routes } from '@/src/shared/constants/routes';
+import { fetchCartData } from '@/src/shared/utils/api/cart/fetch-cart-data';
 import Link from 'next/link';
 import { CiShoppingCart } from 'react-icons/ci';
-import { Routes } from '../shared/constants/routes';
-import { fetchCartData } from '../shared/utils/api/cart/fetch-cart-data';
 
 export default async function CartButton() {
   const data = await fetchCartData();

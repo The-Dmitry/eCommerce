@@ -1,7 +1,9 @@
-import CartCard from '@/src/features/cart-card';
+import CartCard from '@/src/features/cart/cart-card';
+import ClearCart from '@/src/features/cart/clear-cart';
 import { Routes } from '@/src/shared/constants/routes';
 import { fetchCartData } from '@/src/shared/utils/api/cart/fetch-cart-data';
 import convertToUsd from '@/src/shared/utils/convert-to-usd';
+import ApplyCode from '@/src/widgets/apply-code';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -24,16 +26,34 @@ export default async function CartPage() {
       </div>
     );
   }
-  const { lineItems, totalPrice } = data;
+  const { lineItems, totalPrice, discountOnTotalPrice, discountCodes } = data;
+  const discount = discountOnTotalPrice
+    ? discountOnTotalPrice.discountedAmount.centAmount + totalPrice.centAmount
+    : null;
+
   return (
-    <div className='flex w-full flex-col gap-3 md:flex-row'>
+    <div className='flex w-full flex-col gap-3 sm:flex-row'>
       <ul className='grid grow grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] gap-2'>
         {lineItems.map((v) => (
           <CartCard key={v.id} data={v} />
         ))}
       </ul>
-      <aside className='w-full rounded-xl bg-neutral-900 p-2 sm:max-w-64'>
-        <p>Total: {convertToUsd(totalPrice.centAmount)}</p>
+      <aside className='flex h-fit w-full flex-col items-center gap-5 rounded-xl bg-neutral-900 p-2 sm:max-w-64'>
+        <ApplyCode discount={discountCodes} />
+        <ClearCart />
+        <div className='flex justify-center gap-2'>
+          <p className='text-2xl'>
+            Total:{' '}
+            <span className={`${discount && 'text-orange-500'}`}>
+              {convertToUsd(totalPrice.centAmount)}
+            </span>
+          </p>
+          {discount && (
+            <p className='text-lg text-neutral-400 line-through'>
+              {convertToUsd(discount)}
+            </p>
+          )}
+        </div>
       </aside>
     </div>
   );

@@ -14,8 +14,9 @@ export interface CartData {
   shippingMode: string;
   shipping: unknown[];
   customLineItems: unknown[];
-  discountCodes: unknown[];
+  discountCodes: DiscountCodes[];
   directDiscounts: unknown[];
+  discountOnTotalPrice?: DiscountOnTotalPrice;
   inventoryMode: string;
   taxMode: string;
   taxRoundingMode: string;
@@ -116,6 +117,18 @@ export interface Price2 {
   id: string;
   value: Value2;
   key: string;
+  discounted?: {
+    value: {
+      type: string;
+      currencyCode: string;
+      centAmount: number;
+      fractionDigits: number;
+    };
+    discount: {
+      typeId: string;
+      id: string;
+    };
+  };
 }
 
 export interface Value2 {
@@ -147,4 +160,33 @@ export interface TotalPrice2 {
   currencyCode: string;
   centAmount: number;
   fractionDigits: number;
+}
+
+export interface DiscountCodes {
+  discountCode: {
+    typeId: string;
+    id: string;
+  };
+  state: string;
+}
+
+export interface DiscountOnTotalPrice {
+  discountedAmount: {
+    type: string;
+    currencyCode: string;
+    centAmount: number;
+    fractionDigits: number;
+  };
+  includedDiscounts: {
+    discount: {
+      typeId: string;
+      id: string;
+    };
+    discountedAmount: {
+      type: string;
+      currencyCode: string;
+      centAmount: number;
+      fractionDigits: number;
+    };
+  }[];
 }

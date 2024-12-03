@@ -1,7 +1,7 @@
 import { getUserData } from '@/app/actions';
 import Link from 'next/link';
 import { Routes } from '../shared/constants/routes';
-import CartButton from './cart-button';
+import CartButton from './cart/cart-button';
 import LogoutButton from './logout-button';
 
 export default async function UserNavigation() {

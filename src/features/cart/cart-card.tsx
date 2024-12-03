@@ -1,16 +1,18 @@
 import Link from 'next/link';
 
-import { Routes } from '../shared/constants/routes';
-import { LineItem } from '../shared/models/CartData';
-import CartRemoveButton from '../shared/ui/cart-remove-button';
-import convertToUsd from '../shared/utils/convert-to-usd';
+import { Routes } from '../../shared/constants/routes';
+import { LineItem } from '../../shared/models/CartData';
+import CartRemoveButton from '../../shared/ui/cart-remove-button';
+import convertToUsd from '../../shared/utils/convert-to-usd';
 
 interface Props {
   data: LineItem;
 }
 
 export default function CartCard({ data }: Props) {
-  const { name, variant, id } = data;
+  const { name, variant, id, price } = data;
+  const discount = price.discounted?.value.centAmount;
+
   return (
     <li className='group relative flex gap-3 rounded-xl bg-neutral-900 p-2'>
       <img
@@ -26,8 +28,8 @@ export default function CartCard({ data }: Props) {
         >
           {name['en-US']}
         </Link>
-        <p className='text-2xl'>
-          {convertToUsd(variant.prices[0].value.centAmount)}
+        <p className={`text-2xl ${discount && 'text-orange-400'}`}>
+          {convertToUsd(discount ? discount : price.value.centAmount)}
         </p>
       </div>
       <CartRemoveButton lineItemId={id} quantity={1} />

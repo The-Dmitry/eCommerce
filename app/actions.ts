@@ -1,6 +1,7 @@
 'use server';
 
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import { CartData } from '@/src/shared/models/CartData';
 import NewCartItemData from '@/src/shared/models/new-cart-item-data';
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
 import { ResponseError } from '@/src/shared/models/ResponseError';
@@ -128,4 +129,51 @@ export async function removeProductFromCart({
   const result = await updateCart(body);
 
   return result;
+}
+
+export async function deleteCart() {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
+  const result = await fetchWithToken<CartData>(
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${id}?version=${version}`,
+    {
+      method: 'DELETE',
+    }
+  );
+  if (!('errors' in result)) {
+    cookies().delete(COOKIES_DATA.CART_VERSION);
+    cookies().delete(COOKIES_DATA.CART_ID);
+  }
+}
+
+export async function applyPromoCode(_: unknown, kek: FormData) {
+  const value = kek.get('code')?.toString();
+
+  if (!value) {
+    return '';
+  }
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
+  const code = value.toUpperCase();
+  const result = await fetchWithToken<CartData>(
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${id}`,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        version: version ? +version : 1,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code,
+          },
+        ],
+      }),
+    }
+  );
+
+  if ('version' in result) {
+    cookies().set(COOKIES_DATA.CART_VERSION, `${result.version}`);
+    return '';
+  }
+  return result.message;
 }

@@ -7,10 +7,8 @@ export default async function fetchStaticParams(): Promise<ProductProjectionResp
   if ('access_token' in anonym) {
     token = anonym.access_token;
   }
-  console.log('TOKEN', token);
 
   const url = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}`;
-  console.log('URL', url);
 
   const response = await fetch(`${url}/product-projections/search?limit=499`, {
     headers: {

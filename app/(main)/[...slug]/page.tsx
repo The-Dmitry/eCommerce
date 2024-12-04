@@ -17,9 +17,11 @@ export async function generateStaticParams() {
   // console.log('PAGES GENERATED', products.results.length);
 
   return products.results.map((product) => ({
-    params: ['catalog', product.id],
+    slug: ['catalog', product.id],
   }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];

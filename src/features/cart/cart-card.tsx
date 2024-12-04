@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function CartCard({ data }: Props) {
-  const { name, variant, id, price } = data;
+  const { name, variant, id, price, quantity } = data;
   const discount = price.discounted?.value.centAmount;
 
   return (
@@ -32,7 +32,7 @@ export default function CartCard({ data }: Props) {
           {convertToUsd(discount ? discount : price.value.centAmount)}
         </p>
       </div>
-      <CartRemoveButton lineItemId={id} quantity={1} />
+      <CartRemoveButton lineItemId={id} quantity={quantity} />
     </li>
   );
 }

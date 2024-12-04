@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import fetchWithToken from '../fetch-with-token';
 import { createCart } from './create-cart';
 
-export default async function updateCart(body: string) {
+export default async function updateCart(body: string, count: number = 0) {
   let cartId = cookies().get(COOKIES_DATA.CART_ID)?.value;
 
   if (!cartId) {
@@ -24,6 +24,10 @@ export default async function updateCart(body: string) {
   );
 
   if ('errors' in result) {
+    if (!count) {
+      await createCart();
+      return await updateCart(body, count + 1);
+    }
     throw new Error(`Updating cart is failed: ${result.message}`);
   }
 

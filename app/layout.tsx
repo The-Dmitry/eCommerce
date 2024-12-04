@@ -1,3 +1,4 @@
+import CartContextProvider from '@/src/shared/context/cart-context';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`bg-neutral-950 text-white ${roboto.className}`}>
-        {children}
+        <CartContextProvider>{children}</CartContextProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import Price from '@/src/features/price';
 import ProductPageButton from '@/src/features/product-page-button';
 import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
+import fetchStaticParams from '@/src/shared/utils/api/fetch-static-params';
 import ImageSlider from '@/src/widgets/image-slider';
 import Video from '@/src/widgets/video';
 import { Metadata } from 'next';
@@ -11,14 +12,14 @@ interface Props {
   params: Promise<{ slug: [string, string] }>;
 }
 
-// export async function generateStaticParams() {
-//   const products = await fetchStaticParams();
-//   console.log('PAGES GENERATED', products.results.length);
+export async function generateStaticParams() {
+  const products = await fetchStaticParams();
+  // console.log('PAGES GENERATED', products.results.length);
 
-//   return products.results.map((product) => ({
-//     params: ['catalog', product.id],
-//   }));
-// }
+  return products.results.map((product) => ({
+    params: ['catalog', product.id],
+  }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];
@@ -39,6 +40,7 @@ export default async function ProductPage({ params }: Props) {
   }
 
   const data = await fetchProductById(productId);
+
   if (!data || 'errors' in data) {
     return (
       <>

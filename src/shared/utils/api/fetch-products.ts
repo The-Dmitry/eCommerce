@@ -19,45 +19,55 @@ export default async function fetchProducts(
   }: Record<string, string | string[] | undefined>,
   limit: number
 ) {
-  const query = new URLSearchParams({
-    staged: 'true',
-    expand: 'categories[*].parent',
-  });
-  query.set('limit', `${limit}`);
-  if (page) {
-    query.set('offset', `${isStringNumeric(page) ? (+page - 1) * limit : '0'}`);
-  }
-  if (text && typeof text === 'string') {
-    query.set('text.en-us', text);
-  }
-  if (filter) {
-    const category = (Array.isArray(filter) ? filter : [filter])
-      .map((v) => `"${v}"`)
-      .join(',');
-    query.append('filter', `categories.id:${category}`);
-  }
-  const stringSort = Array.isArray(sort) ? sort[0] : sort;
-  const decodedSort = stringSort ? decodeURIComponent(stringSort) : null;
-
-  if (decodedSort) {
-    if (decodedSort in sortingTypes) {
-      query.set('sort', sortingTypes[decodedSort].param);
+  try {
+    const query = new URLSearchParams({
+      staged: 'true',
+      expand: 'categories[*].parent',
+    });
+    query.set('limit', `${limit}`);
+    if (page) {
+      query.set(
+        'offset',
+        `${isStringNumeric(page) ? (+page - 1) * limit : '0'}`
+      );
     }
-  }
-  const priceFrom = isInteger(Array.isArray(from) ? from[0] : from);
-  const priceTo = isInteger(Array.isArray(to) ? to[0] : to);
-  if (priceFrom || priceTo)
-    query.append(
-      'filter',
-      `variants.price.centAmount:range (${priceFrom ? +priceFrom * 100 : 0} to ${priceTo ? +priceTo * 100 : 9999999})`
+    if (text && typeof text === 'string') {
+      query.set('text.en-us', text);
+    }
+    if (filter) {
+      const category = (Array.isArray(filter) ? filter : [filter])
+        .map((v) => `"${v}"`)
+        .join(',');
+      query.append('filter', `categories.id:${category}`);
+    }
+    const stringSort = Array.isArray(sort) ? sort[0] : sort;
+    const decodedSort = stringSort ? decodeURIComponent(stringSort) : null;
+
+    if (decodedSort) {
+      if (decodedSort in sortingTypes) {
+        query.set('sort', sortingTypes[decodedSort].param);
+      }
+    }
+    const priceFrom = isInteger(Array.isArray(from) ? from[0] : from);
+    const priceTo = isInteger(Array.isArray(to) ? to[0] : to);
+    if (priceFrom || priceTo)
+      query.append(
+        'filter',
+        `variants.price.centAmount:range (${priceFrom ? +priceFrom * 100 : 0} to ${priceTo ? +priceTo * 100 : 9999999})`
+      );
+
+    if (discount) {
+      query.append('filter', `variants.prices.discounted:exists`);
+    }
+    const data = await fetchWithToken<ProductProjectionResponse>(
+      `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/search?${query.toString()}`
     );
 
-  if (discount) {
-    query.append('filter', `variants.prices.discounted:exists`);
+    return data;
+  } catch {
+    return {
+      message: 'Service is unavailable',
+      errors: {},
+    };
   }
-  const data = await fetchWithToken<ProductProjectionResponse>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/search?${query.toString()}`
-  );
-
-  return data;
 }

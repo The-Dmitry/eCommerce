@@ -10,7 +10,7 @@ export default function Logo({ size = 50 }: { size?: number }) {
         width={size}
         height={size}
         alt='kek'
-        className='transition-all hover:brightness-110'
+        className='select-none transition-all hover:brightness-110'
       />
     </Link>
   );

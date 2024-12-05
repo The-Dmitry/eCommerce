@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { COOKIES_DATA } from '../../constants/cookies-data';
 import { ResponseError } from '../../models/ResponseError';
 import saveAuthToken from '../save-auth-token';
 import getAnonymousToken from './get-anonymous-token';
@@ -8,12 +9,12 @@ export default async function fetchWithToken<T>(
   options: RequestInit = {},
   reserveAction?: () => Promise<void | boolean>
 ): Promise<T | ResponseError> {
-  let token = cookies().get('access_token');
+  let token = cookies().get(COOKIES_DATA.ACCESS_TOKEN);
   if (!token?.value) {
     const newTokens = await getAnonymousToken();
     if ('access_token' in newTokens) {
       saveAuthToken(newTokens);
-      token = cookies().get('access_token');
+      token = cookies().get(COOKIES_DATA.ACCESS_TOKEN);
     }
   }
   options.headers = {

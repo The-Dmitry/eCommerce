@@ -11,6 +11,8 @@ export default async function getAnonymousToken(): Promise<AuthResponse> {
       Authorization: `Basic ${token}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+    cache: 'no-cache',
   });
-  return await response.json();
+  const data = await response.json();
+  return data;
 }

@@ -1,8 +1,13 @@
 'use server';
 
+import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import { CartData } from '@/src/shared/models/CartData';
+import NewCartItemData from '@/src/shared/models/new-cart-item-data';
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
 import { ResponseError } from '@/src/shared/models/ResponseError';
 import UserData from '@/src/shared/models/UserData';
+import updateCart from '@/src/shared/utils/api/cart/update-cart';
+import fetchWithToken from '@/src/shared/utils/api/fetch-with-token';
 import loginUser from '@/src/shared/utils/api/login-user';
 import revokeToken from '@/src/shared/utils/api/revoke-token';
 import signupSchema, {
@@ -13,7 +18,6 @@ import { ZodFormattedError } from 'zod';
 import loginSchema, {
   LoginData,
 } from '../src/shared/utils/schemas/loginSchema';
-import fetchWithToken from '@/src/shared/utils/api/fetch-with-token';
 
 interface AuthResult<T extends LoginData | SignupData> {
   auth?: string;
@@ -78,4 +82,98 @@ export async function logOut() {
       path: '/',
     });
   });
+}
+
+export async function addProductToCart({
+  productId,
+  variantId,
+  quantity = 1,
+}: NewCartItemData) {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const body = JSON.stringify({
+    version: version ? +version : 1,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: productId,
+        variantId: variantId,
+        quantity: quantity,
+      },
+    ],
+  });
+
+  const result = await updateCart(body);
+
+  return result;
+}
+
+export async function removeProductFromCart({
+  lineItemId,
+  quantity = 1,
+}: {
+  lineItemId: string;
+  quantity: number;
+}) {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const body = JSON.stringify({
+    version: version ? +version : 1,
+    actions: [
+      {
+        action: 'removeLineItem',
+        lineItemId: lineItemId,
+        quantity,
+      },
+    ],
+  });
+
+  const result = await updateCart(body);
+
+  return result;
+}
+
+export async function deleteCart() {
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
+  const result = await fetchWithToken<CartData>(
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${id}?version=${version}`,
+    {
+      method: 'DELETE',
+    }
+  );
+  if (!('errors' in result)) {
+    cookies().delete(COOKIES_DATA.CART_VERSION);
+    cookies().delete(COOKIES_DATA.CART_ID);
+  }
+}
+
+export async function applyPromoCode(_: unknown, kek: FormData) {
+  const value = kek.get('code')?.toString();
+
+  if (!value) {
+    return '';
+  }
+  const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
+  const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
+  const code = value.toUpperCase();
+  const result = await fetchWithToken<CartData>(
+    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${id}`,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        version: version ? +version : 1,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code,
+          },
+        ],
+      }),
+    }
+  );
+
+  if ('version' in result) {
+    cookies().set(COOKIES_DATA.CART_VERSION, `${result.version}`);
+    return '';
+  }
+  return result.message;
 }

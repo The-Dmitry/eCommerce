@@ -1,3 +1,5 @@
+'use server';
+
 import { AuthResponse } from '../../models/AuthResponse';
 
 export default async function getAnonymousToken(): Promise<AuthResponse> {

@@ -1,3 +1,5 @@
+'use server';
+
 import { ProductProjection } from '../../models/ProductProjection';
 import fetchWithToken from './fetch-with-token';
 

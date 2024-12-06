@@ -1,3 +1,5 @@
+'use server';
+
 import { cookies } from 'next/headers';
 import { COOKIES_DATA } from '../../constants/cookies-data';
 import { ResponseError } from '../../models/ResponseError';

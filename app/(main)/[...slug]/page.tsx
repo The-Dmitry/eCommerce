@@ -1,7 +1,6 @@
 import Price from '@/src/features/price';
 import ProductPageButton from '@/src/features/product-page-button';
 import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
-import fetchStaticParams from '@/src/shared/utils/api/fetch-static-params';
 import ImageSlider from '@/src/widgets/image-slider';
 import Video from '@/src/widgets/video';
 import { Metadata } from 'next';
@@ -12,16 +11,16 @@ interface Props {
   params: Promise<{ slug: [string, string] }>;
 }
 
-export async function generateStaticParams() {
-  const products = await fetchStaticParams();
-  // console.log('PAGES GENERATED', products.results.length);
+// export async function generateStaticParams() {
+//   const products = await fetchStaticParams();
+//   // console.log('PAGES GENERATED', products.results.length);
 
-  return products.results.map((product) => ({
-    slug: ['catalog', product.id],
-  }));
-}
+//   return products.results.map((product) => ({
+//     slug: ['catalog', product.id],
+//   }));
+// }
 
-export const dynamicParams = false;
+// export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];

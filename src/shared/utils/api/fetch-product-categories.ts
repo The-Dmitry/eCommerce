@@ -1,3 +1,5 @@
+'use server';
+
 import { ProductCategories } from '../../models/ProductCategories';
 import fetchWithToken from './fetch-with-token';
 

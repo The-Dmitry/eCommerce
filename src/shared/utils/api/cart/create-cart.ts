@@ -1,3 +1,5 @@
+'use server';
+
 import { cookies } from 'next/headers';
 import { COOKIES_DATA } from '../../../constants/cookies-data';
 import { CartData } from '../../../models/CartData';

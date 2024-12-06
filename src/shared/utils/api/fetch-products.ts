@@ -1,3 +1,5 @@
+'use server';
+
 import sortingTypes from '../../constants/sorting-types';
 import { ProductProjectionResponse } from '../../models/ProductProjection';
 import isInteger from '../is-integer';

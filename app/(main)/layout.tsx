@@ -11,7 +11,9 @@ export default function MainLayout({
       <main className='mx-auto w-full max-w-screen-xl flex-auto p-4'>
         {children}
       </main>
-      <footer className='bg-slate-500 p-4 text-center'>Footer</footer>
+      <footer className='border-t-2 border-orange-500 p-4 text-center'>
+        Footer
+      </footer>
     </>
   );
 }

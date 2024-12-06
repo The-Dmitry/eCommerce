@@ -1,3 +1,5 @@
+'use server';
+
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
 import { CartData } from '@/src/shared/models/CartData';
 import { cookies } from 'next/headers';

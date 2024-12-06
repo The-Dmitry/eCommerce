@@ -27,7 +27,7 @@ export default function ProductPageButton({
       <Button
         disabled={state}
         onClick={handleClick}
-        className={`${state && 'bg-green-500 text-white hover:bg-green-500 disabled:cursor-default disabled:filter-none'}`}
+        className={`w-full max-w-80 py-2 ${state && 'bg-green-500 text-white hover:bg-green-500 disabled:cursor-default disabled:filter-none'}`}
       >
         {state ? 'In cart!' : 'Add to cart'}
       </Button>

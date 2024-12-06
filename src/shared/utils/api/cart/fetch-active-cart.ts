@@ -1,3 +1,5 @@
+'use server';
+
 import { CartData } from '@/src/shared/models/CartData';
 import { ResponseError } from '@/src/shared/models/ResponseError';
 

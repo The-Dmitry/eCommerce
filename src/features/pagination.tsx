@@ -8,6 +8,7 @@ import {
 } from 'react-icons/ai';
 
 import { useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import Button from '../shared/ui/button';
 import calculatePagination from '../shared/utils/calculate-pagination';
 import modifySearchParams from '../shared/utils/modify-search-params';
@@ -50,7 +51,7 @@ export default function Pagination({ total, limit }: Props) {
         <AiOutlineDoubleLeft />
       </Button>
       <Button
-        className={BUTTON_STYLE}
+        className={twMerge(BUTTON_STYLE, 'hidden sm:flex')}
         disabled={currentPage === 1}
         onClick={() => switchPage(currentPage - 1)}
       >
@@ -68,7 +69,7 @@ export default function Pagination({ total, limit }: Props) {
         </Button>
       ))}
       <Button
-        className={BUTTON_STYLE}
+        className={twMerge(BUTTON_STYLE, 'hidden sm:flex')}
         disabled={currentPage === totalPages.length}
         onClick={() => switchPage(currentPage + 1)}
       >

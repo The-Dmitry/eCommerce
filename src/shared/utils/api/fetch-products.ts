@@ -1,5 +1,6 @@
 'use server';
 
+import { BASE_URL } from '../../constants/base-url';
 import sortingTypes from '../../constants/sorting-types';
 import { ProductProjectionResponse } from '../../models/ProductProjection';
 import isInteger from '../is-integer';
@@ -62,7 +63,7 @@ export default async function fetchProducts(
       query.append('filter', `variants.prices.discounted:exists`);
     }
     const data = await fetchWithToken<ProductProjectionResponse>(
-      `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/search?${query.toString()}`
+      `${BASE_URL.HOST}/product-projections/search?${query.toString()}`
     );
 
     return data;

@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { BASE_URL } from '../../constants/base-url';
 import { COOKIES_DATA } from '../../constants/cookies-data';
 import { AuthResponse } from '../../models/AuthResponse';
 import saveAuthToken from '../save-auth-token';
@@ -12,7 +13,7 @@ export default async function loginUser(email: string, password: string) {
     [process.env.CLIENT_ID, process.env.CLIENT_SECRET].join(':')
   );
 
-  const URL = `${process.env.AUTH_URL}/oauth/${process.env.PROJECT_KEY}/customers/token?grant_type=password&username=${email}&password=${password}`;
+  const URL = `${BASE_URL.AUTH}/customers/token?grant_type=password&username=${email}&password=${password}`;
   const response = await fetch(URL, {
     method: 'POST',
     headers: {

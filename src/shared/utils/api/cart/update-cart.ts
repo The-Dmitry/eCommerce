@@ -1,5 +1,6 @@
 'use server';
 
+import { BASE_URL } from '@/src/shared/constants/base-url';
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
 import { CartData } from '@/src/shared/models/CartData';
 import { cookies } from 'next/headers';
@@ -18,7 +19,7 @@ export default async function updateCart(body: string, count: number = 0) {
   }
 
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${cartId}`,
+    `${BASE_URL.HOST}/me/carts/${cartId}`,
     {
       method: 'POST',
       body,

@@ -1,5 +1,6 @@
 'use server';
 
+import { BASE_URL } from '@/src/shared/constants/base-url';
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
 import { CartData } from '@/src/shared/models/CartData';
 import NewCartItemData from '@/src/shared/models/new-cart-item-data';
@@ -47,7 +48,7 @@ export async function createUser(
     return { credentials: validationResult.error.format() };
   }
   const { email, firstName, lastName, password } = obj as SignupData;
-  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/customers`;
+  const URL = `${BASE_URL.HOST}/customers`;
   const result = await fetchWithToken<NewCustomer<ResponseError>>(URL, {
     method: 'POST',
     body: JSON.stringify({ email, firstName, lastName, password }),
@@ -60,7 +61,7 @@ export async function createUser(
 }
 
 export async function getUserData(): Promise<UserData | ResponseError> {
-  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me`;
+  const URL = `${BASE_URL.HOST}/me`;
   const result = await fetchWithToken<UserData>(
     URL,
     {
@@ -135,7 +136,7 @@ export async function deleteCart() {
   const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
   const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${id}?version=${version}`,
+    `${BASE_URL.HOST}/me/carts/${id}?version=${version}`,
     {
       method: 'DELETE',
     }
@@ -156,7 +157,7 @@ export async function applyPromoCode(_: unknown, kek: FormData) {
   const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
   const code = value.toUpperCase();
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${id}`,
+    `${BASE_URL.HOST}/carts/${id}`,
     {
       method: 'POST',
       body: JSON.stringify({

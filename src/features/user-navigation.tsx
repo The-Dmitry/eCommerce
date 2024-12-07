@@ -1,29 +1,45 @@
 import { getUserData } from '@/app/actions';
 import Link from 'next/link';
 import { Routes } from '../shared/constants/routes';
-import CartButton from './cart/cart-button';
+import { LinkProps } from '../shared/models/link-props';
 import LogoutButton from './logout-button';
+import PersonalLink from './personal-link';
 
-export default async function UserNavigation() {
-  const data = await getUserData();
+interface Props extends LinkProps {
+  data: Awaited<ReturnType<typeof getUserData>>;
+  className?: string;
+}
+
+export default async function UserNavigation({
+  data,
+  className,
+  icon = false,
+}: Props) {
   const isRegisteredUser = data && 'firstName' in data;
 
   return (
-    <div className='flex items-center gap-2'>
+    <>
+      <Link className={className} href={Routes.MAIN}>
+        Main
+      </Link>
+      <Link className={className} href={Routes.CATALOG}>
+        Catalog
+      </Link>
       {isRegisteredUser ? (
         <>
-          <p>
-            {data.firstName[0].toUpperCase()}. {data.lastName[0].toUpperCase()}.
-          </p>
-          <LogoutButton />
+          <PersonalLink className={className} data={data} icon={icon} />
+          <LogoutButton className={className} icon={icon} />
         </>
       ) : (
         <>
-          <Link href={Routes.SIGN_IN}>Sign In</Link>
-          <Link href={Routes.SING_UP}>Sign Up</Link>
+          <Link className={className} href={Routes.SIGN_IN}>
+            Sign In
+          </Link>
+          <Link className={className} href={Routes.SING_UP}>
+            Sign Up
+          </Link>
         </>
       )}
-      <CartButton />
-    </div>
+    </>
   );
 }

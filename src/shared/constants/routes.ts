@@ -4,4 +4,5 @@ export const Routes = {
   SING_UP: '/signup',
   CATALOG: '/catalog',
   CART: '/cart',
+  PERSONAL: '/personal',
 };

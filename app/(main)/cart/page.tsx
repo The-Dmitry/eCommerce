@@ -32,8 +32,8 @@ export default async function CartPage() {
     : null;
 
   return (
-    <div className='flex w-full flex-col gap-3 sm:flex-row'>
-      <ul className='grid grow gap-2 sm:grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))]'>
+    <div className='flex size-full flex-col justify-between gap-3 sm:h-auto sm:flex-row'>
+      <ul className='grid grow-0 gap-2 sm:grow sm:grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))]'>
         {lineItems.map((v) => (
           <CartCard key={v.id} data={v} />
         ))}

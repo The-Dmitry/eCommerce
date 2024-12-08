@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Rating from '../entities/rating';
 import { ProductProjection } from '../shared/models/ProductProjection';
 import Price from './price';
 
@@ -9,13 +10,18 @@ interface Props {
 export default function ProductCard({ data }: Props) {
   const { name, masterVariant } = data;
 
+  const rating = masterVariant.attributes[1].value;
+
   return (
     <li className='group relative'>
-      <img
-        src={masterVariant.images[0].url}
-        alt={name['en-US']}
-        className='aspect-[1/1.15] w-full rounded-xl object-cover duration-150 hover:transition-all group-hover:brightness-110'
-      />
+      <div className='relative'>
+        <img
+          src={masterVariant.images[0].url}
+          alt={name['en-US']}
+          className='aspect-[1/1.15] w-full rounded-xl object-cover duration-150 hover:transition-all group-hover:brightness-110'
+        />
+        <Rating rating={rating} className='bottom-1 right-1' />
+      </div>
       <h3 className='line-clamp-2'>{name['en-US']}</h3>
       <Price
         discountedPrice={

@@ -1,3 +1,4 @@
+import NotFound from '@/src/entities/not-found';
 import CatalogSearch from '@/src/features/catalog/catalog-search';
 import CatalogSideBar from '@/src/features/catalog/catalog-side-bar';
 import fetchProductCategories from '@/src/shared/utils/api/fetch-product-categories';
@@ -25,7 +26,7 @@ export default async function CatalogLayout({
           </section>
         </div>
       ) : (
-        <div>Incorrect Data</div>
+        <NotFound />
       )}
     </>
   );

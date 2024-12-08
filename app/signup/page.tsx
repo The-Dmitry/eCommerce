@@ -20,7 +20,7 @@ export default function SignUp() {
           href={Routes.SIGN_IN}
           className='text-white underline transition-all hover:text-orange-300'
         >
-          SIgn In
+          Sign In
         </Link>
       </div>
     </div>

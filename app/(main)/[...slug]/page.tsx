@@ -1,26 +1,28 @@
+import NotFound from '@/src/entities/not-found';
+import Rating from '@/src/entities/rating';
 import Price from '@/src/features/price';
 import ProductPageButton from '@/src/features/product-page-button';
 import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
+import fetchStaticParams from '@/src/shared/utils/api/fetch-static-params';
 import ImageSlider from '@/src/widgets/image-slider';
 import Video from '@/src/widgets/video';
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 interface Props {
   params: Promise<{ slug: [string, string] }>;
 }
 
-// export async function generateStaticParams() {
-//   const products = await fetchStaticParams();
-//   // console.log('PAGES GENERATED', products.results.length);
+export async function generateStaticParams() {
+  const products = await fetchStaticParams();
+  // console.log('PAGES GENERATED', products.results.length);
 
-//   return products.results.map((product) => ({
-//     slug: ['catalog', product.id],
-//   }));
-// }
+  return products.results.map((product) => ({
+    slug: ['catalog', product.id],
+  }));
+}
 
-// export const dynamicParams = false;
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];
@@ -43,15 +45,11 @@ export default async function ProductPage({ params }: Props) {
   const data = await fetchProductById(productId);
 
   if (!data || 'errors' in data) {
-    return (
-      <>
-        <div>Not Found</div>
-        <Link href='/catalog'>To Catalog</Link>
-      </>
-    );
+    return <NotFound />;
   }
 
-  const { images, id } = data.masterVariant;
+  const { images, id, attributes } = data.masterVariant;
+  const [video, rating] = attributes;
 
   const categories = data.categories.reduce(
     (acc, v) => {
@@ -78,6 +76,7 @@ export default async function ProductPage({ params }: Props) {
             alt={data.name['en-US']}
             className='inset-0 size-full object-cover'
           />
+          <Rating rating={rating.value} className='bottom-2 left-2 scale-125' />
         </div>
         <h1 className='text-center text-2xl text-orange-500'>
           {data.name['en-US']}
@@ -110,7 +109,7 @@ export default async function ProductPage({ params }: Props) {
         })}
       </aside>
       <section className='grid gap-4'>
-        <Video src={data.masterVariant.attributes[0].value} />
+        <Video src={video.value} />
         <article>{data.description['en-US']}</article>
         <ImageSlider list={images} />
       </section>

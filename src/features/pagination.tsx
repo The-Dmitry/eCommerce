@@ -41,6 +41,10 @@ export default function Pagination({ total, limit }: Props) {
     router.push(`?${newParams}`);
   };
 
+  if (!total) {
+    return <></>;
+  }
+
   return (
     <nav className='mx-auto mt-3 flex gap-4'>
       <Button

@@ -15,6 +15,7 @@ import signupSchema, {
   SignupData,
 } from '@/src/shared/utils/schemas/signupShema';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { ZodFormattedError } from 'zod';
 import loginSchema, {
   LoginData,
@@ -35,7 +36,9 @@ export async function authQuery(
     return { credentials: validationResult.error.format() };
   }
   const { email, password } = obj as LoginData;
-  return await loginUser(email, password);
+  const success = await loginUser(email, password);
+  if (typeof success === 'boolean') redirect('/');
+  return success;
 }
 
 export async function createUser(
@@ -48,14 +51,17 @@ export async function createUser(
     return { credentials: validationResult.error.format() };
   }
   const { email, firstName, lastName, password } = obj as SignupData;
-  const URL = `${BASE_URL.HOST}/customers`;
-  const result = await fetchWithToken<NewCustomer<ResponseError>>(URL, {
-    method: 'POST',
-    body: JSON.stringify({ email, firstName, lastName, password }),
-  });
+  const result = await fetchWithToken<NewCustomer<ResponseError>>(
+    `${BASE_URL.HOST}/customers`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ email, firstName, lastName, password }),
+    }
+  );
 
   if ('customer' in result) {
-    await loginUser(email, password);
+    const success = await loginUser(email, password);
+    if (success) redirect('/');
   }
   return { auth: result.message, credentials: { _errors: [] } };
 }

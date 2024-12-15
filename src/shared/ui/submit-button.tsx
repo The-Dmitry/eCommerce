@@ -1,3 +1,4 @@
+'use client';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { useFormStatus } from 'react-dom';
 import Button from './button';

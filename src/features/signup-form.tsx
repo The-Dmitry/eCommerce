@@ -17,7 +17,7 @@ export default function SignupForm() {
     <div className='w-full max-w-72 pb-10 text-orange-500'>
       <Form action={func}>
         <Form.Text placeholder='Email' name='email' hasError={!!emailError}>
-          <Form.Error text={emailError} />
+          {emailError && <Form.Error text={emailError} />}
         </Form.Text>
         <Form.Text
           placeholder='First Name'
@@ -25,7 +25,7 @@ export default function SignupForm() {
           hasError={!!firstName}
           autoComplete='off'
         >
-          <Form.Error text={firstName} />
+          {firstName && <Form.Error text={firstName} />}
         </Form.Text>
         <Form.Text
           placeholder='Last Name'
@@ -33,21 +33,21 @@ export default function SignupForm() {
           hasError={!!lastName}
           autoComplete='off'
         >
-          <Form.Error text={lastName} />
+          {lastName && <Form.Error text={lastName} />}
         </Form.Text>
         <Form.Password
           placeholder='Password'
           name='password'
           hasError={!!passwordError}
         >
-          <Form.Error text={passwordError} />
+          {passwordError && <Form.Error text={passwordError} />}
         </Form.Password>
         <Form.Password
           placeholder='Confirm Password'
           name='confirmPassword'
           hasError={!!passwordError}
         >
-          <Form.Error text={confirmPassword} />
+          {confirmPassword && <Form.Error text={confirmPassword} />}
         </Form.Password>
         <SubmitButton>Sign Up</SubmitButton>
       </Form>

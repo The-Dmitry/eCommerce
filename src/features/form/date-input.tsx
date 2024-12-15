@@ -1,14 +1,14 @@
 import FormInputProps from '@/src/shared/models/form-input-props';
 import { twMerge } from 'tailwind-merge';
 
-export default function TextInput({
+export default function DateInput({
   text,
   labelProps,
   className,
   hasError,
   children,
   ...rest
-}: FormInputProps) {
+}: Omit<FormInputProps, 'type'>) {
   return (
     <div
       className={twMerge('mb-6 w-full last-of-type:mb-3', children && 'mb-1')}
@@ -22,7 +22,7 @@ export default function TextInput({
       >
         {text && text}
         <input
-          type='text'
+          type='date'
           className={twMerge(
             'form-input',
             hasError && 'border-red-500',

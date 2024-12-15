@@ -19,7 +19,9 @@ export default function PasswordInput({
   const switchMode = () => setPasswordMode((prev) => !prev);
 
   return (
-    <div className={twMerge(children && 'pb-7', 'w-full')}>
+    <div
+      className={twMerge('mb-6 w-full last-of-type:mb-3', children && 'mb-1')}
+    >
       <label
         className={twMerge(
           'flex flex-col text-center text-current',

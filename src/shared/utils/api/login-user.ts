@@ -1,7 +1,6 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { BASE_URL } from '../../constants/base-url';
 import { COOKIES_DATA } from '../../constants/cookies-data';
 import { AuthResponse } from '../../models/AuthResponse';
@@ -22,8 +21,8 @@ export default async function loginUser(email: string, password: string) {
     },
   });
   const result: AuthResponse = await response.json();
-
-  if (!('access_token' in result)) {
+  const success = 'access_token' in result;
+  if (!success) {
     return { auth: result.message, credentials: { _errors: [] } };
   }
   const data = await fetchActiveCart(result.access_token);
@@ -33,5 +32,5 @@ export default async function loginUser(email: string, password: string) {
   }
 
   saveAuthToken(result);
-  redirect('/');
+  return success;
 }

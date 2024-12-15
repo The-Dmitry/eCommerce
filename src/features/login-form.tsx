@@ -12,16 +12,16 @@ export default function LoginForm() {
 
   return (
     <div className='w-full max-w-72 pb-10 text-orange-500'>
-      <Form action={func} className='gap-4'>
+      <Form action={func}>
         <Form.Text placeholder='Email' name='email' hasError={!!emailError}>
-          <Form.Error text={emailError} />
+          {emailError && <Form.Error text={emailError} />}
         </Form.Text>
         <Form.Password
           placeholder='Password'
           name='password'
           hasError={!!passwordError}
         >
-          <Form.Error text={passwordError} />
+          {passwordError && <Form.Error text={passwordError} />}
         </Form.Password>
         <SubmitButton>Sign In</SubmitButton>
       </Form>

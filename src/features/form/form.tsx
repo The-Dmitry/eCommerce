@@ -2,6 +2,7 @@ import { FormHTMLAttributes, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 import DateInput from './date-input';
 import Error from './error';
+import Input from './input';
 import PasswordInput from './password-input';
 import TextInput from './text-input';
 
@@ -24,3 +25,4 @@ Form.Text = TextInput;
 Form.Password = PasswordInput;
 Form.Error = Error;
 Form.Date = DateInput;
+Form.Input = Input;

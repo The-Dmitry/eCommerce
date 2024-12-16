@@ -14,6 +14,7 @@ import revokeToken from '@/src/shared/utils/api/revoke-token';
 import signupSchema, {
   SignupData,
 } from '@/src/shared/utils/schemas/signupShema';
+import validateForm from '@/src/shared/utils/validate-form';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ZodFormattedError } from 'zod';
@@ -30,12 +31,11 @@ export async function authQuery(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<LoginData>> {
-  const obj = Object.fromEntries(data.entries());
-  const validationResult = await loginSchema.safeParseAsync(obj);
+  const [collection, validationResult] = await validateForm(loginSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, password } = obj as LoginData;
+  const { email, password } = collection as LoginData;
   const success = await loginUser(email, password);
   if (typeof success === 'boolean') redirect('/');
   return success;
@@ -45,12 +45,11 @@ export async function createUser(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<SignupData>> {
-  const obj = Object.fromEntries(data.entries());
-  const validationResult = await signupSchema.safeParseAsync(obj);
+  const [collection, validationResult] = await validateForm(signupSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, firstName, lastName, password } = obj as SignupData;
+  const { email, firstName, lastName, password } = collection as SignupData;
   const result = await fetchWithToken<NewCustomer<ResponseError>>(
     `${BASE_URL.HOST}/customers`,
     {

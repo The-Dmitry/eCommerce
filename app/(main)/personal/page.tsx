@@ -1,3 +1,9 @@
+import PersonalDataForm from '@/src/features/personal/personal-data-form';
+
 export default function personalPage() {
-  return <div>Personal</div>;
+  return (
+    <div>
+      <PersonalDataForm />
+    </div>
+  );
 }

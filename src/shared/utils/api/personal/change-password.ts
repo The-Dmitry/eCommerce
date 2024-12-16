@@ -7,6 +7,7 @@ import { ZodFormattedError } from 'zod';
 import passwordChangeScheme, {
   ChangePasswordData,
 } from '../../schemas/password-change-scheme';
+import validateForm from '../../validate-form';
 import fetchWithToken from '../fetch-with-token';
 import loginUser from '../login-user';
 
@@ -20,13 +21,14 @@ export default async function changePassword(
   _: unknown,
   data: FormData
 ): Promise<ChangePasswordResult> {
-  const obj = Object.fromEntries(data.entries());
-
-  const validationResult = await passwordChangeScheme.safeParseAsync(obj);
+  const [collection, validationResult] = await validateForm(
+    passwordChangeScheme,
+    data
+  );
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { currentPassword, newPassword } = obj as ChangePasswordData;
+  const { currentPassword, newPassword } = collection as ChangePasswordData;
   const userData = await getUserData();
   if ('errors' in userData) {
     return { auth: userData.message, credentials: { _errors: [] } };

@@ -21,14 +21,12 @@ export default async function changePassword(
   _: unknown,
   data: FormData
 ): Promise<ChangePasswordResult> {
-  const [collection, validationResult] = await validateForm(
-    passwordChangeScheme,
-    data
-  );
+  const validationResult = await validateForm(passwordChangeScheme, data);
+
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { currentPassword, newPassword } = collection as ChangePasswordData;
+  const { currentPassword, newPassword } = validationResult.data;
   const userData = await getUserData();
   if ('errors' in userData) {
     return { auth: userData.message, credentials: { _errors: [] } };

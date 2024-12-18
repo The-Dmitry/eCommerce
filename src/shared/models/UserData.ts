@@ -30,7 +30,7 @@ interface Data {
   salutation: string;
   dateOfBirth: string;
   password: string;
-  addresses: unknown[];
+  addresses: Addresses[];
   shippingAddressIds: unknown[];
   billingAddressIds: unknown[];
   isEmailVerified: boolean;
@@ -45,6 +45,17 @@ interface Error {
     code: string;
     message: string;
   }[];
+}
+
+export interface Addresses {
+  id: string;
+  streetName: string;
+  streetNumber: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  building: string;
+  state: string;
 }
 
 export default UserData;

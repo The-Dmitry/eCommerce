@@ -31,11 +31,11 @@ export async function authQuery(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<LoginData>> {
-  const [collection, validationResult] = await validateForm(loginSchema, data);
+  const validationResult = await validateForm(loginSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, password } = collection as LoginData;
+  const { email, password } = validationResult.data;
   const success = await loginUser(email, password);
   if (typeof success === 'boolean') redirect('/');
   return success;
@@ -45,11 +45,11 @@ export async function createUser(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<SignupData>> {
-  const [collection, validationResult] = await validateForm(signupSchema, data);
+  const validationResult = await validateForm(signupSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, firstName, lastName, password } = collection as SignupData;
+  const { email, firstName, lastName, password } = validationResult.data;
   const result = await fetchWithToken<NewCustomer<ResponseError>>(
     `${BASE_URL.HOST}/customers`,
     {
@@ -77,7 +77,7 @@ export async function getUserData(): Promise<UserData | ResponseError> {
   return result;
 }
 
-export async function logOut() {
+export async function logOut(needRedirect?: boolean) {
   const cookieStore = cookies();
 
   cookieStore.getAll().forEach((cookie) => {
@@ -88,6 +88,9 @@ export async function logOut() {
       path: '/',
     });
   });
+  if (needRedirect) {
+    redirect('/');
+  }
 }
 
 export async function addProductToCart({

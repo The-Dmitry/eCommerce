@@ -1,9 +1,7 @@
-import PersonalDataForm from '@/src/features/personal/personal-data-form';
+import { getUserData } from '@/app/actions';
+import PersonalDataForm from '@features/personal/personal-data-form';
 
-export default function personalPage() {
-  return (
-    <div>
-      <PersonalDataForm />
-    </div>
-  );
+export default async function personalPage() {
+  const userData = await getUserData();
+  return <PersonalDataForm userData={userData} />;
 }

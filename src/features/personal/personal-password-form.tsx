@@ -14,18 +14,30 @@ export default function PersonalPasswordForm() {
 
   return (
     <Form action={action} className='w-full text-orange-500'>
-      <Form.Password text='Current password' name='currentPassword'>
+      <Form.Password
+        text='Current password'
+        name='currentPassword'
+        hasError={!!currentPassword}
+      >
         {currentPassword && <Form.Error text={currentPassword} />}
       </Form.Password>
-      <Form.Password text='New password' name='newPassword'>
+      <Form.Password
+        text='New password'
+        name='newPassword'
+        hasError={!!newPassword}
+      >
         {newPassword && <Form.Error text={newPassword} />}
       </Form.Password>
-      <Form.Password text='Confirm password' name='confirmPassword'>
+      <Form.Password
+        text='Confirm password'
+        name='confirmPassword'
+        hasError={!!confirmPassword}
+      >
         {confirmPassword && <Form.Error text={confirmPassword} />}
       </Form.Password>
       {errors?.auth && <Form.Error text={errors.auth} />}
       {errors?.success ? (
-        <p className='flex h-8 w-44 items-center justify-center rounded-md bg-green-600 text-lg text-white'>
+        <p className='flex h-8 w-44 select-none items-center justify-center rounded-md bg-green-600 text-lg text-white'>
           Success
         </p>
       ) : (

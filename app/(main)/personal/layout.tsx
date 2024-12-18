@@ -7,11 +7,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className='min-h-screen'>
-      <div className='mx-auto max-w-3xl px-4 py-12 text-orange-500'>
-        <div className='rounded-2xl bg-neutral-900 p-8 shadow-lg'>
+    <div className='flex h-full items-center justify-center lg:block'>
+      <div className='mx-auto w-full text-orange-500 sm:max-w-3xl'>
+        <div className='w-full max-w-3xl rounded-2xl bg-neutral-900 p-3 shadow-lg sm:p-8'>
           <div className='mb-8 flex items-center space-x-4'>
-            <div className='flex size-16 items-center justify-center rounded-full bg-current'>
+            <div className='hidden size-16 items-center justify-center rounded-full bg-current sm:flex'>
               <IoPersonCircleOutline className='text-5xl text-white' />
             </div>
             <div>

@@ -6,12 +6,17 @@ export default function DateInput({
   labelProps,
   className,
   hasError,
+  divClassName,
   children,
   ...rest
 }: Omit<FormInputProps, 'type'>) {
   return (
     <div
-      className={twMerge('mb-6 w-full last-of-type:mb-3', children && 'mb-1')}
+      className={twMerge(
+        'mb-6 w-full last-of-type:mb-3',
+        divClassName,
+        children && 'mb-1'
+      )}
     >
       <label
         className={twMerge(

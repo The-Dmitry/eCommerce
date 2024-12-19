@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { COOKIES_DATA } from './src/shared/constants/cookies-data';
 import { Routes } from './src/shared/constants/routes';
+import REGISTERED_USER from './src/shared/constants/user-type';
 import fetchActiveCart from './src/shared/utils/api/cart/fetch-active-cart';
 import getAnonymousToken from './src/shared/utils/api/get-anonymous-token';
 
@@ -14,8 +15,15 @@ export async function middleware(req: NextRequest) {
   ];
 
   if (
-    userType?.value === '' &&
+    userType?.value === REGISTERED_USER &&
     routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
+  ) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+
+  if (
+    userType?.value !== REGISTERED_USER &&
+    req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
   ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
@@ -35,7 +43,7 @@ export async function middleware(req: NextRequest) {
       });
       response.cookies.set(
         COOKIES_DATA.USER_TYPE,
-        isAnonymous ? 'anonymous' : ''
+        isAnonymous ? '' : REGISTERED_USER
       );
       if (active_cart) {
         response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id);

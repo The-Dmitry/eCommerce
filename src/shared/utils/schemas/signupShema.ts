@@ -20,7 +20,7 @@ const signupSchema = z
       }),
     lastName: z
       .string()
-      .min(5, 'Minimum length - 3 characters')
+      .min(3, 'Minimum length - 3 characters')
       .max(20, 'Maximum length - 20 characters')
       .regex(/^[^0-9]*$/, {
         message: 'The string must not contain any numbers',

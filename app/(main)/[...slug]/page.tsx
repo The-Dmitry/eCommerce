@@ -22,8 +22,6 @@ export async function generateStaticParams() {
   }));
 }
 
-export const dynamicParams = false;
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];
   const data = await fetchProductById(product);

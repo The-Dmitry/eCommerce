@@ -2,6 +2,7 @@
 
 import { BASE_URL } from '@/src/shared/constants/base-url';
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import REGISTERED_USER from '@/src/shared/constants/user-type';
 import { CartData } from '@/src/shared/models/CartData';
 import NewCartItemData from '@/src/shared/models/new-cart-item-data';
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
@@ -66,6 +67,10 @@ export async function createUser(
 }
 
 export async function getUserData(): Promise<UserData | ResponseError> {
+  const user = cookies().get(COOKIES_DATA.USER_TYPE)?.value === REGISTERED_USER;
+  if (!user) {
+    return { message: 'User is not authorized', statusCode: 401, errors: [] };
+  }
   const URL = `${BASE_URL.HOST}/me`;
   const result = await fetchWithToken<UserData>(
     URL,

@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 import Button from '../shared/ui/button';
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 

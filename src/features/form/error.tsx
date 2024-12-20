@@ -9,7 +9,7 @@ export default function Error({ text, className, ...rest }: Props) {
   return text ? (
     <p
       className={twMerge(
-        'box-content h-0 w-full text-center text-sm text-red-500',
+        'box-content w-full text-center text-sm text-red-500',
         className
       )}
       {...rest}

@@ -1,6 +1,8 @@
 'use server';
 
+import { BASE_URL } from '@/src/shared/constants/base-url';
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
+import REGISTERED_USER from '@/src/shared/constants/user-type';
 import { CartData } from '@/src/shared/models/CartData';
 import NewCartItemData from '@/src/shared/models/new-cart-item-data';
 import { NewCustomer } from '@/src/shared/models/NewCustomer';
@@ -13,7 +15,9 @@ import revokeToken from '@/src/shared/utils/api/revoke-token';
 import signupSchema, {
   SignupData,
 } from '@/src/shared/utils/schemas/signupShema';
+import validateForm from '@/src/shared/utils/validate-form';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { ZodFormattedError } from 'zod';
 import loginSchema, {
   LoginData,
@@ -28,39 +32,46 @@ export async function authQuery(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<LoginData>> {
-  const obj = Object.fromEntries(data.entries());
-  const validationResult = await loginSchema.safeParseAsync(obj);
+  const validationResult = await validateForm(loginSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, password } = obj as LoginData;
-  return await loginUser(email, password);
+  const { email, password } = validationResult.data;
+  const success = await loginUser(email, password);
+  if (typeof success === 'boolean') redirect('/');
+  return success;
 }
 
 export async function createUser(
   _: unknown,
   data: FormData
 ): Promise<AuthResult<SignupData>> {
-  const obj = Object.fromEntries(data.entries());
-  const validationResult = await signupSchema.safeParseAsync(obj);
+  const validationResult = await validateForm(signupSchema, data);
   if (!validationResult.success) {
     return { credentials: validationResult.error.format() };
   }
-  const { email, firstName, lastName, password } = obj as SignupData;
-  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/customers`;
-  const result = await fetchWithToken<NewCustomer<ResponseError>>(URL, {
-    method: 'POST',
-    body: JSON.stringify({ email, firstName, lastName, password }),
-  });
+  const { email, firstName, lastName, password } = validationResult.data;
+  const result = await fetchWithToken<NewCustomer<ResponseError>>(
+    `${BASE_URL.HOST}/customers`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ email, firstName, lastName, password }),
+    }
+  );
 
   if ('customer' in result) {
-    await loginUser(email, password);
+    const success = await loginUser(email, password);
+    if (success) redirect('/');
   }
   return { auth: result.message, credentials: { _errors: [] } };
 }
 
 export async function getUserData(): Promise<UserData | ResponseError> {
-  const URL = `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me`;
+  const user = cookies().get(COOKIES_DATA.USER_TYPE)?.value === REGISTERED_USER;
+  if (!user) {
+    return { message: 'User is not authorized', statusCode: 401, errors: [] };
+  }
+  const URL = `${BASE_URL.HOST}/me`;
   const result = await fetchWithToken<UserData>(
     URL,
     {
@@ -71,7 +82,7 @@ export async function getUserData(): Promise<UserData | ResponseError> {
   return result;
 }
 
-export async function logOut() {
+export async function logOut(needRedirect?: boolean) {
   const cookieStore = cookies();
 
   cookieStore.getAll().forEach((cookie) => {
@@ -82,6 +93,9 @@ export async function logOut() {
       path: '/',
     });
   });
+  if (needRedirect) {
+    redirect('/');
+  }
 }
 
 export async function addProductToCart({
@@ -135,7 +149,7 @@ export async function deleteCart() {
   const version = cookies().get(COOKIES_DATA.CART_VERSION)?.value;
   const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/me/carts/${id}?version=${version}`,
+    `${BASE_URL.HOST}/me/carts/${id}?version=${version}`,
     {
       method: 'DELETE',
     }
@@ -156,7 +170,7 @@ export async function applyPromoCode(_: unknown, kek: FormData) {
   const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
   const code = value.toUpperCase();
   const result = await fetchWithToken<CartData>(
-    `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/carts/${id}`,
+    `${BASE_URL.HOST}/carts/${id}`,
     {
       method: 'POST',
       body: JSON.stringify({

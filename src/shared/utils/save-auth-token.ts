@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { COOKIES_DATA } from '../constants/cookies-data';
+import REGISTERED_USER from '../constants/user-type';
 import { AuthSuccess } from '../models/AuthResponse';
 
 export default function saveAuthToken({
@@ -15,5 +16,5 @@ export default function saveAuthToken({
   cookies().set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
     maxAge: 60 * 60 * 24 * 30,
   });
-  cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? 'anonymous' : '');
+  cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
 }

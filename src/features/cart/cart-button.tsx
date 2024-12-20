@@ -14,7 +14,7 @@ export default async function CartButton() {
   }
 
   return (
-    <Link href={Routes.CART} className='relative'>
+    <Link href={Routes.CART} title='Cart' className='relative'>
       <CiShoppingCart className='-ml-1 text-5xl' />
       <span className='absolute inset-0 flex size-full items-center justify-center'>
         {count ? count : ''}

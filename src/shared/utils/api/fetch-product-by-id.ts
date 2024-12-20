@@ -1,3 +1,6 @@
+'use server';
+
+import { BASE_URL } from '../../constants/base-url';
 import { ProductProjection } from '../../models/ProductProjection';
 import fetchWithToken from './fetch-with-token';
 
@@ -8,7 +11,7 @@ export default async function fetchProductById(productId: string) {
       expand: 'categories[*].parent',
     });
     const data = await fetchWithToken<ProductProjection>(
-      `${process.env.HOST_URL}/${process.env.PROJECT_KEY}/product-projections/${productId}?${params.toString()}`
+      `${BASE_URL.HOST}/product-projections/${productId}?${params.toString()}`
     );
     return data;
   } catch {

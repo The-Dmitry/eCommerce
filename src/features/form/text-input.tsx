@@ -7,10 +7,17 @@ export default function TextInput({
   className,
   hasError,
   children,
+  divClassName,
   ...rest
 }: FormInputProps) {
   return (
-    <div className={twMerge(children && 'pb-7', 'w-full')}>
+    <div
+      className={twMerge(
+        'mb-6 w-full last-of-type:mb-3',
+        divClassName,
+        children && 'mb-1'
+      )}
+    >
       <label
         className={twMerge(
           'flex flex-col text-center text-current',

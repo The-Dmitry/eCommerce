@@ -1,6 +1,8 @@
 import { FormHTMLAttributes, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+import DateInput from './date-input';
 import Error from './error';
+import Input from './input';
 import PasswordInput from './password-input';
 import TextInput from './text-input';
 
@@ -11,7 +13,7 @@ interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
 export default function Form({ children, className, ...rest }: FormProps) {
   return (
     <form
-      className={twMerge('flex flex-col items-center gap-2', className)}
+      className={twMerge('flex flex-col items-center', className)}
       {...rest}
     >
       {children}
@@ -22,3 +24,5 @@ export default function Form({ children, className, ...rest }: FormProps) {
 Form.Text = TextInput;
 Form.Password = PasswordInput;
 Form.Error = Error;
+Form.Date = DateInput;
+Form.Input = Input;

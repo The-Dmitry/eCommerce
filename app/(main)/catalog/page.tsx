@@ -18,7 +18,11 @@ export default async function CatalogPage({
   const data = await fetchProducts({ ...params }, 20);
 
   if (!('results' in data)) {
-    return <div>Data is not found</div>;
+    return (
+      <p className='flex size-full items-center justify-center text-orange-500'>
+        Nothing found
+      </p>
+    );
   }
 
   return (

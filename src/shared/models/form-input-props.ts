@@ -1,9 +1,14 @@
 import { HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 
-export default interface FormInputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface FormInputPropsWithType
+  extends InputHTMLAttributes<HTMLInputElement> {
   text?: string;
   labelProps?: HTMLAttributes<HTMLLabelElement>;
   hasError?: boolean;
   children?: ReactNode | string;
+  divClassName?: string;
 }
+
+type FormInputProps = Omit<FormInputPropsWithType, 'type'>;
+
+export default FormInputProps;

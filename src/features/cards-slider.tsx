@@ -1,0 +1,35 @@
+'use client';
+
+import React, { ReactNode } from 'react';
+import { A11y, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+
+interface Props {
+  children: ReactNode[];
+}
+
+export default function CardsSlider({ children }: Props) {
+  return (
+    <section>
+      <Swiper
+        grabCursor={true}
+        slidesPerView={'auto'}
+        spaceBetween={20}
+        loop
+        autoplay={{ delay: 10000, pauseOnMouseEnter: true }}
+        modules={[A11y, Autoplay]}
+      >
+        {React.Children.map(children, (child) => (
+          <SwiperSlide
+            className='select-none'
+            style={{ width: 'min(100%, 18rem)' }}
+          >
+            {child}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </section>
+  );
+}

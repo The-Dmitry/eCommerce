@@ -76,6 +76,7 @@ export async function getUserData(): Promise<UserData | ResponseError> {
     URL,
     {
       method: 'GET',
+      cache: 'no-store',
     },
     revokeToken
   );

@@ -16,6 +16,18 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      keyframes: {
+        slideFromRight: {
+          '0%': { transform: 'translateX(100%)' },
+        },
+        fadeInBackground: {
+          '0%': { backgroundColor: 'transparent' },
+        },
+      },
+      animation: {
+        burger: 'slideFromRight 0.5s ease',
+        fadeInBackground: 'fadeInBackground 0.5s ease-out',
+      },
     },
   },
   plugins: [],

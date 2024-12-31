@@ -19,7 +19,7 @@ export default async function CatalogList({
   return (
     <ul className='grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] gap-2'>
       {data.results.map((card) => (
-        <ProductCard data={card} key={card.id} href='catalog' />
+        <ProductCard data={card} key={card.id} href='/catalog' />
       ))}
     </ul>
   );

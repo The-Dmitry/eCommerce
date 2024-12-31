@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { A11y, Autoplay } from 'swiper/modules';
+import { A11y, Autoplay, Mousewheel } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -18,8 +18,9 @@ export default function CardsSlider({ children }: Props) {
         slidesPerView={'auto'}
         spaceBetween={20}
         loop
+        mousewheel
         autoplay={{ delay: 10000, pauseOnMouseEnter: true }}
-        modules={[A11y, Autoplay]}
+        modules={[A11y, Autoplay, Mousewheel]}
       >
         {React.Children.map(children, (child) => (
           <SwiperSlide

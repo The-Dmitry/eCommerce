@@ -3,7 +3,7 @@ import ProductCard from '../features/product-card';
 import fetchProducts from '../shared/utils/api/fetch-products';
 
 export default async function DiscountedSliderWrapper() {
-  const products = await fetchProducts({ discount: 'true' }, 10);
+  const products = await fetchProducts({ discount: 'true' }, 499);
 
   if ('errors' in products) {
     return <div>not found</div>;

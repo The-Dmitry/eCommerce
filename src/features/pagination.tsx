@@ -48,6 +48,7 @@ export default function Pagination({ total, limit }: Props) {
   return (
     <nav className='mx-auto mt-3 flex gap-4'>
       <Button
+        variant='button'
         className={BUTTON_STYLE}
         disabled={currentPage === 1}
         onClick={() => switchPage(1)}
@@ -55,6 +56,7 @@ export default function Pagination({ total, limit }: Props) {
         <AiOutlineDoubleLeft />
       </Button>
       <Button
+        variant='button'
         className={twMerge(BUTTON_STYLE, 'hidden sm:flex')}
         disabled={currentPage === 1}
         onClick={() => switchPage(currentPage - 1)}
@@ -64,6 +66,7 @@ export default function Pagination({ total, limit }: Props) {
 
       {pagesForRender.map((v) => (
         <Button
+          variant='button'
           key={v}
           onClick={() => switchPage(v)}
           disabled={currentPage === v}
@@ -73,6 +76,7 @@ export default function Pagination({ total, limit }: Props) {
         </Button>
       ))}
       <Button
+        variant='button'
         className={twMerge(BUTTON_STYLE, 'hidden sm:flex')}
         disabled={currentPage === totalPages.length}
         onClick={() => switchPage(currentPage + 1)}
@@ -80,6 +84,7 @@ export default function Pagination({ total, limit }: Props) {
         <AiOutlineRight />
       </Button>
       <Button
+        variant='button'
         className={BUTTON_STYLE}
         disabled={currentPage === totalPages.length}
         onClick={() => switchPage(totalPages.length)}

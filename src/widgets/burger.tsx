@@ -39,6 +39,7 @@ export default function Burger({ children, className }: Props) {
   return (
     <>
       <Button
+        variant='button'
         className={twMerge(
           'bg-transparent p-1 text-orange-500 hover:bg-transparent sm:hidden',
           className

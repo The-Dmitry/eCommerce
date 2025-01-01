@@ -63,7 +63,12 @@ export default function CatalogFilter({ data }: Props) {
           Search
         </SubmitButton>
       </form>
-      <Button className='mt-4 w-full' type='button' onClick={resetForm}>
+      <Button
+        variant='button'
+        className='mt-4 w-full'
+        type='button'
+        onClick={resetForm}
+      >
         Reset
       </Button>
     </aside>

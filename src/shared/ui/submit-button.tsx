@@ -10,7 +10,7 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
 export default function SubmitButton({ children, ...rest }: Props) {
   const { pending } = useFormStatus();
   return (
-    <Button type='submit' disabled={pending} {...rest}>
+    <Button variant='button' type='submit' disabled={pending} {...rest}>
       {children}
     </Button>
   );

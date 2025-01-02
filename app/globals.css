@@ -2,7 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .form-input {
+    @apply w-full rounded-md border-2 border-current bg-transparent px-1 text-center text-2xl text-inherit focus:border-yellow-500 focus:outline-none;
+  }
+
+  .text-shadow {
+    text-shadow:
+      2px 0 2px #000000,
+      0 1px 1px #000000,
+      -1px 0 1px #000000,
+      0 -1px 1px #000000;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  color: rgba(255, 255, 255, 0);
+  opacity: 1;
+  display: block;
+  background: url('/calendar.png') center / cover no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
 }

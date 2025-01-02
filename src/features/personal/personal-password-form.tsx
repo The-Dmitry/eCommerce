@@ -2,7 +2,7 @@
 
 import SubmitButton from '@/src/shared/ui/submit-button';
 import changePassword from '@/src/shared/utils/api/personal/change-password';
-import Form from '@features/form/form';
+import Form from '@shared/ui/form/form';
 import { useFormState } from 'react-dom';
 
 export default function PersonalPasswordForm() {

@@ -51,7 +51,6 @@ const AnimatedBackground = () => {
       draw() {
         if (!ctx) return;
 
-        // Create gradient for glow effect
         const gradient = ctx.createRadialGradient(
           this.x,
           this.y,
@@ -60,9 +59,9 @@ const AnimatedBackground = () => {
           this.y,
           this.size * 2
         );
-        gradient.addColorStop(0, `rgba(255, 140, 0, ${this.alpha})`); // Core
-        gradient.addColorStop(0.5, `rgba(255, 140, 0, ${this.alpha * 0.3})`); // Mid
-        gradient.addColorStop(1, 'rgba(255, 140, 0, 0)'); // Edge
+        gradient.addColorStop(0, `rgba(255, 140, 0, ${this.alpha})`);
+        gradient.addColorStop(0.5, `rgba(255, 140, 0, ${this.alpha * 0.3})`);
+        gradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
 
         ctx.beginPath();
         ctx.fillStyle = gradient;

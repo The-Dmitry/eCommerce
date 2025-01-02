@@ -1,4 +1,4 @@
-import FormInputProps from '@/src/shared/models/form-input-props';
+import FormInputProps from '@shared/models/form-input-props';
 import { twMerge } from 'tailwind-merge';
 
 export default function DateInput({

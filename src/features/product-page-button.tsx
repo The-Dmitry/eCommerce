@@ -1,10 +1,10 @@
 'use client';
 
-import { addProductToCart } from '@/app/actions';
 import { startTransition, useContext, useOptimistic } from 'react';
 import { CartContext } from '../shared/context/cart-context';
 import NewCartItemData from '../shared/models/new-cart-item-data';
 import Button from '../shared/ui/button';
+import addProductToCart from '@shared/utils/api/cart/add-product-to-cart';
 
 export default function ProductPageButton({
   productId,

@@ -1,10 +1,10 @@
 'use client';
 
-import { applyPromoCode } from '@/app/actions';
 import { useFormState } from 'react-dom';
 import { IoCheckmark } from 'react-icons/io5';
 import { CartData } from '../shared/models/CartData';
 import SubmitButton from '../shared/ui/submit-button';
+import applyPromoCode from '@shared/utils/api/cart/apply-promocode';
 
 export default function ApplyCode({
   discount,

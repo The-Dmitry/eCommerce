@@ -1,8 +1,8 @@
 'use client';
-import { authQuery } from '@/app/actions';
+import Form from '@shared/ui/form/form';
+import SubmitButton from '@shared/ui/submit-button';
+import { authQuery } from '@shared/utils/api/auth/auth-query';
 import { useFormState } from 'react-dom';
-import SubmitButton from '../shared/ui/submit-button';
-import Form from './form/form';
 
 export default function LoginForm() {
   const [errors, func] = useFormState(authQuery, null);

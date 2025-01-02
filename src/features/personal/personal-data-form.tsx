@@ -3,9 +3,9 @@
 import UserData from '@/src/shared/models/UserData';
 import SubmitButton from '@/src/shared/ui/submit-button';
 import changePersonalData from '@/src/shared/utils/api/personal/change-personal-data';
+import Autocomplete from '@shared/ui/form/autocomplete';
+import Form from '@shared/ui/form/form';
 import { useFormState } from 'react-dom';
-import Autocomplete from '../form/autocomplete';
-import Form from '../form/form';
 
 export default function PersonalDataForm({ userData }: { userData: UserData }) {
   const [errors, action] = useFormState(changePersonalData, null);

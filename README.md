@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Game Store (Pet-project)
 
-## Getting Started
+**Game Store** is a modern e-commerce application built for selling video games, powered by the [commercetools](https://commercetools.com/) backend. The app leverages cutting-edge technologies to provide a seamless and dynamic user experience.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## [Deploy on netlify](https://the-dmitry-store.netlify.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Dynamic Product Catalog**: Displays video game listings with rich details.
+- **User-Friendly Design**: Responsive and visually appealing interface built with **Tailwind CSS**.
+- **Swiper Integration**: Smooth and customizable sliders for showcasing promotions or featured products.
+- **Commercetools Backend**: Utilizes the commercetools API for flexible and scalable commerce capabilities.
+- **Robust Validation**: Implements **Zod** for input validation and type safety.
+- **TypeScript Support**: Ensures strong typing for a reliable and maintainable codebase.
+- **Modern Framework**: Built with **Next.js 14** for server-side rendering and optimized performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📚 Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend Framework**: [Next.js 14](https://nextjs.org/)
+- **Programming Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Data Validation**: [Zod](https://zod.dev/)
+- **Carousel/Sliders**: [Swiper](https://swiperjs.com/)
+- **Backend**: [Commercetools](https://commercetools.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---

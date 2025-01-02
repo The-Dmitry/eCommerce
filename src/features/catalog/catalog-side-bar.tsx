@@ -19,6 +19,7 @@ export default function CatalogSideBar({ children }: { children: ReactNode }) {
   return (
     <div className='flex flex-col gap-2'>
       <Button
+        variant='button'
         onClick={handleFilter}
         className='w-full border-2 border-current bg-transparent text-orange-500 hover:bg-transparent hover:text-orange-400 sm:hidden'
       >

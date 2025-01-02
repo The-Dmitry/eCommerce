@@ -7,9 +7,8 @@ export default function Greeting() {
       <Image
         src={'/greeting.webp'}
         alt='stray'
-        layout='fill'
-        objectFit='cover'
-        className='absolute z-[-1] size-full rounded-2xl object-right'
+        fill
+        className='absolute z-[-1] size-full rounded-2xl bg-left object-cover object-right'
       />
       <h1
         className='text-shadow col-[1_/_2] pb-[14%] text-orange-500'
@@ -25,7 +24,7 @@ export default function Greeting() {
         adventure, and every player finds their perfect match. Explore our
         collection, level up your library, and embark on your next epic quest!
       </p>
-      <div className='col-[1_/_2] flex justify-evenly gap-8 sm:justify-normal'>
+      <div className='col-[1_/_2] flex justify-evenly gap-8 sm:justify-normal md:py-4'>
         <Button variant='link' href={'/catalog'}>
           Catalog
         </Button>

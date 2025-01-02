@@ -25,7 +25,7 @@ export default function LoginForm() {
         </Form.Password>
         <SubmitButton>Sign In</SubmitButton>
       </Form>
-      <Form.Error text={errors?.auth} className='mt-5' />
+      <Form.Error text={errors?.auth} className='-mb-10 mt-5' />
     </div>
   );
 }

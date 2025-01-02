@@ -1,6 +1,5 @@
 'use server';
 
-import { getUserData } from '@/app/actions';
 import { BASE_URL } from '@/src/shared/constants/base-url';
 import UserData from '@/src/shared/models/UserData';
 import { ZodFormattedError } from 'zod';
@@ -10,6 +9,7 @@ import passwordChangeScheme, {
 import validateForm from '../../validate-form';
 import fetchWithToken from '../fetch-with-token';
 import loginUser from '../login-user';
+import getUserData from '@shared/utils/api/auth/get-user-data';
 
 interface ChangePasswordResult {
   success?: boolean;

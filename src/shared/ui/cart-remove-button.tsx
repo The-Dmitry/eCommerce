@@ -1,6 +1,6 @@
 'use client';
 
-import { removeProductFromCart } from '@/app/actions';
+import removeProductFromCart from '@shared/utils/api/cart/remove-product-from-cart';
 import { IoMdClose } from 'react-icons/io';
 
 interface Props {

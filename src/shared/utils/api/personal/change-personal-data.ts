@@ -1,8 +1,8 @@
 'use server';
 
-import { getUserData } from '@/app/actions';
 import { BASE_URL } from '@/src/shared/constants/base-url';
 import UserData from '@/src/shared/models/UserData';
+import getUserData from '@shared/utils/api/auth/get-user-data';
 import { ZodFormattedError } from 'zod';
 import filterObjectEmptyValues from '../../filter-object-empty-values';
 import personalDataChangeScheme, {
@@ -43,7 +43,6 @@ export default async function changePersonalData(
     streetNumber,
   } = validationResult.data;
   const URL = `${BASE_URL.HOST}/customers/${id}`;
-  console.log(URL);
 
   const actions = [
     filterObjectEmptyValues({ action: 'setFirstName', firstName }),

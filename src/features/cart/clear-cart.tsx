@@ -1,7 +1,7 @@
 'use client';
 
-import { deleteCart } from '@/app/actions';
 import Button from '@/src/shared/ui/button';
+import deleteCart from '@shared/utils/api/cart/delete-cart';
 import { ButtonHTMLAttributes } from 'react';
 
 export default function ClearCart({

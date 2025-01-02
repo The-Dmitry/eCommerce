@@ -1,10 +1,10 @@
 'use client';
 
-import { logOut } from '@/app/actions';
 import { usePathname } from 'next/navigation';
 import { CiLogout } from 'react-icons/ci';
 import { Routes } from '../shared/constants/routes';
 import { LinkProps } from '../shared/models/link-props';
+import logOut from '@shared/utils/api/auth/logout';
 
 interface Props extends LinkProps {
   className?: string;

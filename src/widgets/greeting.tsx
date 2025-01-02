@@ -24,7 +24,7 @@ export default function Greeting() {
         adventure, and every player finds their perfect match. Explore our
         collection, level up your library, and embark on your next epic quest!
       </p>
-      <div className='col-[1_/_2] flex justify-evenly gap-8 sm:justify-normal md:py-4'>
+      <div className='col-[1_/_2] flex justify-evenly gap-8 sm:justify-normal'>
         <Button variant='link' href={'/catalog'}>
           Catalog
         </Button>

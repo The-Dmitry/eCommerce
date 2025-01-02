@@ -1,10 +1,11 @@
-import NotFound from '@/src/entities/not-found';
-import Rating from '@/src/entities/rating';
-import Price from '@/src/features/price';
-import ProductPageButton from '@/src/features/product-page-button';
-import fetchProductById from '@/src/shared/utils/api/fetch-product-by-id';
-import ImageSlider from '@/src/widgets/image-slider';
-import Video from '@/src/widgets/video';
+import NotFound from '@entities/not-found';
+import Rating from '@entities/rating';
+import Price from '@features/price';
+import ProductPageButton from '@features/product-page-button';
+import fetchProductById from '@shared/utils/api/fetch-product-by-id';
+import fetchStaticParams from '@shared/utils/api/fetch-static-params';
+import ImageSlider from '@widgets/image-slider';
+import Video from '@widgets/video';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -12,14 +13,13 @@ interface Props {
   params: Promise<{ slug: [string, string] }>;
 }
 
-// export async function generateStaticParams() {
-//   const products = await fetchStaticParams();
-//   // console.log('PAGES GENERATED', products.results.length);
+export async function generateStaticParams() {
+  const products = await fetchStaticParams();
 
-//   return products.results.map((product) => ({
-//     slug: ['catalog', product.id],
-//   }));
-// }
+  return products.results.map((product) => ({
+    slug: ['catalog', product.id],
+  }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = (await params).slug[1];

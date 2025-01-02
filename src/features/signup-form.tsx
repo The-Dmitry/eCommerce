@@ -51,7 +51,7 @@ export default function SignupForm() {
         </Form.Password>
         <SubmitButton>Sign Up</SubmitButton>
       </Form>
-      <Form.Error text={errors?.auth} className='mt-5' />
+      <Form.Error text={errors?.auth} className='-mb-10 mt-5' />
     </div>
   );
 }

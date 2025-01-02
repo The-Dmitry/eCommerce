@@ -1,9 +1,8 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import getDataFromStorage from '@shared/utils/get-data-from-storage';
 import { COOKIES_DATA } from '../../constants/cookies-data';
 import { ResponseError } from '../../models/ResponseError';
-import saveAuthToken from '../save-auth-token';
 import getAnonymousToken from './get-anonymous-token';
 
 export default async function fetchWithToken<T>(
@@ -11,17 +10,19 @@ export default async function fetchWithToken<T>(
   options: RequestInit = {},
   reserveAction?: () => Promise<void | boolean>
 ): Promise<T | ResponseError> {
-  let token = cookies().get(COOKIES_DATA.ACCESS_TOKEN);
-  if (!token?.value) {
-    const newTokens = await getAnonymousToken();
-    if ('access_token' in newTokens) {
-      saveAuthToken(newTokens);
-      token = cookies().get(COOKIES_DATA.ACCESS_TOKEN);
+  let token = getDataFromStorage(COOKIES_DATA.ACCESS_TOKEN);
+
+  if (!token) {
+    const anonymous = await getAnonymousToken();
+    if ('access_token' in anonymous) {
+      token = anonymous.access_token;
+    } else {
+      throw new Error('Unable to retrieve token');
     }
   }
   options.headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token!.value}`,
+    Authorization: `Bearer ${token}`,
     ...options.headers,
   };
   const request = await fetch(input, options);

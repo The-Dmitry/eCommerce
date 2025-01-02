@@ -2,18 +2,12 @@ import Link from 'next/link';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { Routes } from '../shared/constants/routes';
 import { LinkProps } from '../shared/models/link-props';
-import UserData from '../shared/models/UserData';
 
 interface Props extends LinkProps {
-  data: UserData;
   className?: string;
 }
 
-export default function PersonalLink({ data, className, icon }: Props) {
-  if (!('firstName' in data)) {
-    return <></>;
-  }
-
+export default function PersonalLink({ className, icon }: Props) {
   return (
     <Link className={className} href={Routes.PERSONAL}>
       {icon ? (

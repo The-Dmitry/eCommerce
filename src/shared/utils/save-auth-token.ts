@@ -12,9 +12,13 @@ export default function saveAuthToken({
   const isAnonymous = scope.includes('anonymous');
   cookies().set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
     maxAge: expires_in,
+    httpOnly: true,
+    secure: true,
   });
   cookies().set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
     maxAge: 60 * 60 * 24 * 30,
+    httpOnly: true,
+    secure: true,
   });
   cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
 }

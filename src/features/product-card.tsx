@@ -1,19 +1,22 @@
 import Link from 'next/link';
+import { twMerge } from 'tailwind-merge';
 import Rating from '../entities/rating';
 import { ProductProjection } from '../shared/models/ProductProjection';
 import Price from './price';
 
 interface Props {
   data: ProductProjection;
+  className?: string;
+  href: string;
 }
 
-export default function ProductCard({ data }: Props) {
+export default function ProductCard({ data, className, href }: Props) {
   const { name, masterVariant } = data;
 
   const rating = masterVariant.attributes[1].value;
 
   return (
-    <li className='group relative'>
+    <li className={twMerge('group relative', className)}>
       <div className='relative'>
         <img
           src={masterVariant.images[0].url}
@@ -29,7 +32,7 @@ export default function ProductCard({ data }: Props) {
         }
         price={data.masterVariant.prices[0].value.centAmount}
       />
-      <Link className='absolute inset-0' href={`./${data.id}`} />
+      <Link className='absolute inset-0' href={`${href}/${data.id}`} />
     </li>
   );
 }

@@ -34,16 +34,17 @@ export default function Burger({ children, className }: Props) {
     }
   }, [open]);
 
-  const handleClick = () => setOpen((prev) => !prev);
+  const handleClick = (value: boolean) => setOpen(value);
 
   return (
     <>
       <Button
+        variant='button'
         className={twMerge(
           'bg-transparent p-1 text-orange-500 hover:bg-transparent sm:hidden',
           className
         )}
-        onClick={handleClick}
+        onClick={() => handleClick(true)}
       >
         <RxHamburgerMenu className='text-4xl' />
       </Button>
@@ -51,15 +52,19 @@ export default function Burger({ children, className }: Props) {
         ref.current &&
         createPortal(
           <div
-            onClick={handleClick}
-            className='fixed inset-0 z-10 flex justify-end overscroll-none bg-black/75 text-orange-500 sm:hidden'
+            onClick={() => handleClick(false)}
+            className='fixed inset-0 flex animate-fadeInBackground justify-end overscroll-none bg-black/75 text-orange-500 backdrop-blur-sm sm:hidden'
           >
-            <button onClick={handleClick}>
-              <IoMdClose className='absolute right-2 top-2 text-4xl text-current' />
+            <button
+              onClick={() => handleClick(false)}
+              className='absolute right-2 top-2 z-10 text-4xl text-current'
+              disabled={!open}
+            >
+              <IoMdClose />
             </button>
             <div
               onClick={(e) => e.stopPropagation()}
-              className='flex size-full max-w-80 flex-col items-center gap-2 overscroll-none bg-neutral-900/95 pt-14 text-2xl'
+              className='flex size-full max-w-80 animate-burger flex-col items-center gap-4 bg-neutral-900/95 pt-14 text-2xl'
             >
               {children}
             </div>

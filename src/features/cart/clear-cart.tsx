@@ -8,7 +8,7 @@ export default function ClearCart({
   ...rest
 }: Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>) {
   return (
-    <Button onClick={() => deleteCart()} {...rest}>
+    <Button variant='button' onClick={() => deleteCart()} {...rest}>
       Clear Cart
     </Button>
   );

@@ -1,21 +1,20 @@
-import { getUserData } from '@/app/actions';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { COOKIES_DATA } from '../shared/constants/cookies-data';
 import { Routes } from '../shared/constants/routes';
 import { LinkProps } from '../shared/models/link-props';
 import LogoutButton from './logout-button';
 import PersonalLink from './personal-link';
 
 interface Props extends LinkProps {
-  data: Awaited<ReturnType<typeof getUserData>>;
   className?: string;
 }
 
 export default async function UserNavigation({
-  data,
   className,
   icon = false,
 }: Props) {
-  const isRegisteredUser = data && 'firstName' in data;
+  const isRegisteredUser = cookies().get(COOKIES_DATA.USER_TYPE)?.value;
 
   return (
     <>
@@ -27,7 +26,7 @@ export default async function UserNavigation({
       </Link>
       {isRegisteredUser ? (
         <>
-          <PersonalLink className={className} data={data} icon={icon} />
+          <PersonalLink className={className} icon={icon} />
           <LogoutButton className={className} icon={icon} />
         </>
       ) : (

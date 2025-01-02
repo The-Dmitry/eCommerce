@@ -25,6 +25,7 @@ export default function ProductPageButton({
   return (
     <>
       <Button
+        variant='button'
         disabled={state}
         onClick={handleClick}
         className={`w-full max-w-80 py-2 ${state && 'bg-green-500 text-white hover:bg-green-500 disabled:cursor-default disabled:filter-none'}`}

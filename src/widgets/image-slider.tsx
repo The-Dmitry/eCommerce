@@ -36,7 +36,7 @@ export default function ImageSlider({
       autoplay={{ delay: 10000, pauseOnMouseEnter: true }}
     >
       {images.map((v, i) => (
-        <SwiperSlide key={i} className=''>
+        <SwiperSlide key={i}>
           <img
             src={v.url}
             alt='game image'

@@ -1,19 +1,20 @@
-import Link, { LinkProps } from 'next/link';
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import Link from 'next/link';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: 'button';
 }
 
-interface CustomLink
-  extends LinkProps,
-    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
+interface CustomLink extends React.ComponentProps<typeof Link> {
   variant: 'link';
-  children?: ReactNode | string;
+  children?: ReactNode;
 }
 
-type Props = (ButtonProps | CustomLink) & { children: ReactNode };
+type Props = (ButtonProps | CustomLink) & {
+  children: ReactNode;
+  className?: string;
+};
 
 export default function Button({
   variant = 'button',
@@ -32,7 +33,7 @@ export default function Button({
       </button>
     ),
     link: (
-      <Link className={cssNames} {...(rest as Omit<LinkProps, 'variant'>)}>
+      <Link className={cssNames} {...(rest as Omit<CustomLink, 'variant'>)}>
         {children}
       </Link>
     ),

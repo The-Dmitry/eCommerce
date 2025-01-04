@@ -23,10 +23,14 @@ const config: Config = {
         fadeInBackground: {
           '0%': { backgroundColor: 'transparent' },
         },
+        appearance: {
+          '0%': { opacity: '0' },
+        },
       },
       animation: {
         burger: 'slideFromRight 0.5s ease',
         fadeInBackground: 'fadeInBackground 0.5s ease-out',
+        fromTransparent: 'appearance 0.3s linear',
       },
     },
   },

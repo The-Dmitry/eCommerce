@@ -4,14 +4,17 @@ import { FaGithub } from 'react-icons/fa';
 
 export default function MainLayout({
   children,
+  personal,
 }: Readonly<{
   children: React.ReactNode;
+  personal: React.ReactNode;
 }>) {
   return (
     <>
       <Header />
       <main className='mx-auto flex w-full max-w-screen-xl flex-auto flex-col gap-4 p-4'>
         {children}
+        {personal}
       </main>
       <footer className='flex justify-center py-2'>
         <Link

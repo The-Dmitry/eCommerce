@@ -7,7 +7,7 @@ export default function MainLayout({
 }>) {
   return (
     <div className='flex h-full items-center justify-center lg:block'>
-      <PersonalLayout isHardNavigation={true}>{children}</PersonalLayout>
+      <PersonalLayout>{children}</PersonalLayout>
     </div>
   );
 }

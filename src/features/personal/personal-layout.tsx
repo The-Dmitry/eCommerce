@@ -3,10 +3,8 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 
 export default function PersonalLayout({
   children,
-  isHardNavigation = false,
 }: Readonly<{
   children: React.ReactNode;
-  isHardNavigation?: boolean;
 }>) {
   return (
     <div className='mx-auto w-full text-orange-500 sm:max-w-3xl'>
@@ -24,7 +22,7 @@ export default function PersonalLayout({
         </div>
 
         <div className='mb-8'>
-          <PersonalNavigation isHardNavigation={isHardNavigation} />
+          <PersonalNavigation />
         </div>
 
         <div className='mt-6'>{children}</div>

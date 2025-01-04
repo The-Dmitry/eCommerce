@@ -1,6 +1,7 @@
 import SignUp from '@widgets/sign-up';
 import { Metadata } from 'next';
 
+
 export const metadata: Metadata = {
   title: 'Sign Up',
 };

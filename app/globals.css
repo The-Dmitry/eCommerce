@@ -31,7 +31,6 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  scrollbar-gutter: stable both-edges;
 }
 
 input[type='search']::-webkit-search-cancel-button {

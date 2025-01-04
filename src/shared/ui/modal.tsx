@@ -11,9 +11,9 @@ export default function Modal({ children }: { children: ReactNode }) {
   const ANIMATION_DURATION = 300;
 
   useEffect(() => {
-    document.body.classList.add('overflow-hidden');
+    document.body.classList.add('modal-block');
     return () => {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove('modal-block');
     };
   }, []);
 

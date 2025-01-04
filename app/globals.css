@@ -23,12 +23,15 @@
 
 html {
   height: 100%;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  scrollbar-gutter: stable both-edges;
 }
 
 input[type='search']::-webkit-search-cancel-button {

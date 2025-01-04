@@ -17,13 +17,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
   return (
     <html lang='en'>
       <body className={`bg-neutral-950 text-white ${roboto.className}`}>
-        <CartContextProvider>{children}</CartContextProvider>
+        <CartContextProvider>
+          <>
+            {children}
+            <div>{auth}</div>
+          </>
+        </CartContextProvider>
         <AnimatedBackground />
       </body>
     </html>

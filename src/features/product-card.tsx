@@ -1,3 +1,4 @@
+import ProductImage from '@features/catalog/product-image';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import Rating from '../entities/rating';
@@ -18,11 +19,7 @@ export default function ProductCard({ data, className, href }: Props) {
   return (
     <li className={twMerge('group relative', className)}>
       <div className='relative'>
-        <img
-          src={masterVariant.images[0].url}
-          alt={name['en-US']}
-          className='aspect-[1/1.15] w-full rounded-xl object-cover duration-150 hover:transition-all group-hover:brightness-110'
-        />
+        <ProductImage url={masterVariant.images[0].url} alt={name['en-US']} />
         <Rating rating={rating} className='bottom-1 right-1' />
       </div>
       <h3 className='line-clamp-2'>{name['en-US']}</h3>

@@ -26,11 +26,17 @@ const config: Config = {
         appearance: {
           '0%': { opacity: '0' },
         },
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
       },
       animation: {
         burger: 'slideFromRight 0.5s ease',
         fadeInBackground: 'fadeInBackground 0.5s ease-out',
         fromTransparent: 'appearance 0.3s linear',
+        shimmer: 'shimmer 2s infinite',
       },
     },
   },

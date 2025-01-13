@@ -1,17 +1,11 @@
 interface Props {
   className?: string;
-  height?: string;
-  width?: string;
 }
 
-export default function Skeleton({
-  className = '',
-  height = 'h-full',
-  width = 'w-full',
-}: Props) {
+export default function Skeleton({ className = '' }: Props) {
   return (
     <div
-      className={`relative overflow-hidden rounded-md bg-neutral-900 ${height} ${width} ${className} `}
+      className={`relative size-full overflow-hidden rounded-md bg-neutral-900 ${className} `}
     >
       <div className='absolute inset-0'>
         <div className='animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900' />

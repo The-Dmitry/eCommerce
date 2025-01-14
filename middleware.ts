@@ -14,19 +14,19 @@ export async function middleware(req: NextRequest) {
     req.cookies.get(COOKIES_DATA.USER_TYPE),
   ];
 
-  // if (
-  //   userType?.value === REGISTERED_USER &&
-  //   routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
-  // ) {
-  //   return NextResponse.redirect(new URL('/', req.url));
-  // }
+  if (
+    userType?.value === REGISTERED_USER &&
+    routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
+  ) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
 
-  // if (
-  //   userType?.value !== REGISTERED_USER &&
-  //   req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
-  // ) {
-  //   return NextResponse.redirect(new URL('/', req.url));
-  // }
+  if (
+    userType?.value !== REGISTERED_USER &&
+    req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
+  ) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
 
   if (!(token && refreshToken)) {
     const data = await getAnonymousToken();
@@ -40,6 +40,7 @@ export async function middleware(req: NextRequest) {
       response.cookies.set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
         maxAge: expires_in,
         expires: expirationDate,
+        sameSite: 'strict',
       });
       const refreshTokenExpirationDate = new Date();
       refreshTokenExpirationDate.setTime(
@@ -48,6 +49,7 @@ export async function middleware(req: NextRequest) {
       response.cookies.set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
         maxAge: 60 * 60 * 24 * 30,
         expires: refreshTokenExpirationDate,
+        sameSite: 'strict',
       });
       response.cookies.set(
         COOKIES_DATA.USER_TYPE,

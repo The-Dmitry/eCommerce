@@ -10,7 +10,8 @@ export async function fetchCartData() {
   const id = getDataFromStorage(COOKIES_DATA.CART_ID);
   if (id) {
     const result = await fetchWithToken<CartData>(
-      `${BASE_URL.HOST}/carts/${id}`
+      `${BASE_URL.HOST}/carts/${id}`,
+      { cache: 'no-store' }
     );
     return result;
   }

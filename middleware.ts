@@ -42,7 +42,7 @@ export async function middleware(req: NextRequest) {
         expires: expirationDate,
         sameSite: 'none',
         secure: true,
-        httpOnly: false,
+        httpOnly: true,
       });
       const refreshTokenExpirationDate = new Date();
       refreshTokenExpirationDate.setTime(
@@ -53,17 +53,31 @@ export async function middleware(req: NextRequest) {
         expires: refreshTokenExpirationDate,
         sameSite: 'none',
         secure: true,
-        httpOnly: false,
+        httpOnly: true,
       });
       response.cookies.set(
         COOKIES_DATA.USER_TYPE,
-        isAnonymous ? '' : REGISTERED_USER
+        isAnonymous ? '' : REGISTERED_USER,
+        {
+          maxAge: 60 * 60 * 24 * 30,
+          expires: refreshTokenExpirationDate,
+          sameSite: 'none',
+          secure: true,
+          httpOnly: true,
+        }
       );
       if (active_cart) {
         response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id);
         response.cookies.set(
           COOKIES_DATA.CART_VERSION,
-          `${active_cart.version}`
+          `${active_cart.version}`,
+          {
+            maxAge: 60 * 60 * 24 * 30,
+            expires: refreshTokenExpirationDate,
+            sameSite: 'none',
+            secure: true,
+            httpOnly: true,
+          }
         );
       }
 

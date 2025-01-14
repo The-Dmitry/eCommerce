@@ -30,5 +30,11 @@ export default function saveAuthToken({
     secure: true,
     httpOnly: true,
   });
-  cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
+  cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER, {
+    maxAge: 60 * 60 * 24 * 30,
+    expires: refreshTokenExpirationDate,
+    sameSite: 'none',
+    secure: true,
+    httpOnly: true,
+  });
 }

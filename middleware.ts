@@ -50,7 +50,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  if (token && !cartId?.value) {
+  if (token && !cartId) {
     const response = NextResponse.next();
     await initializeCart(token.value, response);
     return response;

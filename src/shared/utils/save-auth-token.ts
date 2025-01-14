@@ -17,6 +17,7 @@ export default function saveAuthToken({
     sameSite: 'none',
     secure: true,
     expires: expirationDate,
+    httpOnly: true,
   });
   const refreshTokenExpirationDate = new Date();
   refreshTokenExpirationDate.setTime(
@@ -27,6 +28,7 @@ export default function saveAuthToken({
     expires: refreshTokenExpirationDate,
     sameSite: 'none',
     secure: true,
+    httpOnly: true,
   });
   cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
 }

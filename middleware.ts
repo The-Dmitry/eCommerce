@@ -14,19 +14,19 @@ export async function middleware(req: NextRequest) {
     req.cookies.get(COOKIES_DATA.USER_TYPE),
   ];
 
-  if (
-    userType?.value === REGISTERED_USER &&
-    routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
-  ) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
+  // if (
+  //   userType?.value === REGISTERED_USER &&
+  //   routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
+  // ) {
+  //   return NextResponse.redirect(new URL('/', req.url));
+  // }
 
-  if (
-    userType?.value !== REGISTERED_USER &&
-    req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
-  ) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
+  // if (
+  //   userType?.value !== REGISTERED_USER &&
+  //   req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
+  // ) {
+  //   return NextResponse.redirect(new URL('/', req.url));
+  // }
 
   if (!(token && refreshToken)) {
     const data = await getAnonymousToken();

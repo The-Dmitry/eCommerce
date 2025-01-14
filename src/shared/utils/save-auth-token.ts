@@ -18,10 +18,15 @@ export default function saveAuthToken({
     secure: true,
     expires: expirationDate,
   });
+  const refreshTokenExpirationDate = new Date();
+  refreshTokenExpirationDate.setTime(
+    refreshTokenExpirationDate.getTime() + 60 * 60 * 24 * 30
+  );
   cookies().set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
     maxAge: 60 * 60 * 24 * 30,
     httpOnly: true,
     secure: true,
+    expires: refreshTokenExpirationDate,
   });
   cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
 }

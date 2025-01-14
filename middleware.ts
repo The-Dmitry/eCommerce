@@ -1,9 +1,9 @@
+import { COOKIES_DATA } from '@shared/constants/cookies-data';
+import { Routes } from '@shared/constants/routes';
+import REGISTERED_USER from '@shared/constants/user-type';
 import initializeCart from '@shared/utils/api/cart/initialize-cart';
+import getAnonymousToken from '@shared/utils/api/get-anonymous-token';
 import { NextResponse, type NextRequest } from 'next/server';
-import { COOKIES_DATA } from './src/shared/constants/cookies-data';
-import { Routes } from './src/shared/constants/routes';
-import REGISTERED_USER from './src/shared/constants/user-type';
-import getAnonymousToken from './src/shared/utils/api/get-anonymous-token';
 
 const routes = [Routes.SIGN_IN, Routes.SING_UP];
 

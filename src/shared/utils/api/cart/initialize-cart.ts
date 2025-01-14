@@ -12,6 +12,9 @@ export default async function initializeCart(
   if (active_cart) {
     response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id);
     response.cookies.set(COOKIES_DATA.CART_VERSION, `${active_cart.version}`);
+
+    response.headers.set(COOKIES_DATA.CART_ID, active_cart.id);
+    response.headers.set(COOKIES_DATA.CART_VERSION, `${active_cart.version}`);
   }
   return response;
 }

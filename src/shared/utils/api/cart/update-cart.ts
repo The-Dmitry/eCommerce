@@ -35,7 +35,15 @@ export default async function updateCart(body: string, count: number = 0) {
   }
 
   const { version } = result;
-  cookies().set(COOKIES_DATA.CART_VERSION, `${version}`);
+  const cartExpiration = new Date();
+  cartExpiration.setTime(cartExpiration.getTime() + 60 * 60 * 24 * 30);
+  cookies().set(COOKIES_DATA.CART_VERSION, `${version}`, {
+    maxAge: 60 * 60 * 24 * 30,
+    expires: cartExpiration,
+    sameSite: 'none',
+    secure: true,
+    httpOnly: true,
+  });
 
   return result;
 }

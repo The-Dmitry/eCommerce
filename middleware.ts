@@ -68,7 +68,7 @@ export async function middleware(req: NextRequest) {
       );
       if (active_cart) {
         const cartExpiration = new Date();
-        cartExpiration.setTime(cartExpiration.getTime() + expires_in * 1000);
+        cartExpiration.setTime(cartExpiration.getTime() + 60 * 60 * 24 * 30);
         response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id, {
           maxAge: 60 * 60 * 24 * 30,
           expires: cartExpiration,
@@ -81,7 +81,7 @@ export async function middleware(req: NextRequest) {
           `${active_cart.version}`,
           {
             maxAge: 60 * 60 * 24 * 30,
-            expires: cartExpiration,
+            expires: refreshTokenExpirationDate,
             sameSite: 'none',
             secure: true,
             httpOnly: true,

@@ -14,9 +14,23 @@ export async function createCart() {
     }),
   });
   if (!('errors' in result)) {
+    const cartExpiration = new Date();
+    cartExpiration.setTime(cartExpiration.getTime() + 60 * 60 * 24 * 30);
     const { id, version } = result;
-    cookies().set(COOKIES_DATA.CART_ID, id);
-    cookies().set(COOKIES_DATA.CART_VERSION, `${version}`);
+    cookies().set(COOKIES_DATA.CART_ID, id, {
+      maxAge: 60 * 60 * 24 * 30,
+      expires: cartExpiration,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+    });
+    cookies().set(COOKIES_DATA.CART_VERSION, `${version}`, {
+      maxAge: 60 * 60 * 24 * 30,
+      expires: cartExpiration,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+    });
   }
   return result;
 }

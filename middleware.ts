@@ -40,7 +40,8 @@ export async function middleware(req: NextRequest) {
       response.cookies.set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
         maxAge: expires_in,
         expires: expirationDate,
-        sameSite: 'strict',
+        sameSite: 'none',
+        secure: true,
       });
       const refreshTokenExpirationDate = new Date();
       refreshTokenExpirationDate.setTime(
@@ -49,7 +50,8 @@ export async function middleware(req: NextRequest) {
       response.cookies.set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
         maxAge: 60 * 60 * 24 * 30,
         expires: refreshTokenExpirationDate,
-        sameSite: 'strict',
+        sameSite: 'none',
+        secure: true,
       });
       response.cookies.set(
         COOKIES_DATA.USER_TYPE,

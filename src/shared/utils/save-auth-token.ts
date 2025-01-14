@@ -14,10 +14,9 @@ export default function saveAuthToken({
   expirationDate.setTime(expirationDate.getTime() + expires_in * 1000);
   cookies().set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
     maxAge: 60 * 60 * 24 * 30,
-    httpOnly: true,
+    sameSite: 'none',
     secure: true,
     expires: expirationDate,
-    sameSite: 'strict',
   });
   const refreshTokenExpirationDate = new Date();
   refreshTokenExpirationDate.setTime(
@@ -25,10 +24,9 @@ export default function saveAuthToken({
   );
   cookies().set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
     maxAge: 60 * 60 * 24 * 30,
-    httpOnly: true,
-    secure: true,
     expires: refreshTokenExpirationDate,
-    sameSite: 'strict',
+    sameSite: 'none',
+    secure: true,
   });
   cookies().set(COOKIES_DATA.USER_TYPE, isAnonymous ? '' : REGISTERED_USER);
 }

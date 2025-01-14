@@ -3,14 +3,15 @@
 import { BASE_URL } from '@/src/shared/constants/base-url';
 import { COOKIES_DATA } from '@/src/shared/constants/cookies-data';
 import { CartData } from '@/src/shared/models/CartData';
-import { cookies } from 'next/headers';
+import getDataFromStorage from '@shared/utils/get-data-from-storage';
 import fetchWithToken from '../fetch-with-token';
 
 export async function fetchCartData() {
-  const id = cookies().get(COOKIES_DATA.CART_ID)?.value;
+  const id = getDataFromStorage(COOKIES_DATA.CART_ID);
   if (id) {
     const result = await fetchWithToken<CartData>(
-      `${BASE_URL.HOST}/carts/${id}`
+      `${BASE_URL.HOST}/carts/${id}`,
+      { cache: 'no-store' }
     );
     return result;
   }

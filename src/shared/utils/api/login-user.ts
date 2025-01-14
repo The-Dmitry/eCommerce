@@ -36,14 +36,12 @@ export default async function loginUser(email: string, password: string) {
       expires: refreshTokenExpirationDate,
       sameSite: 'none',
       secure: true,
-      httpOnly: true,
     });
     cookies().set(COOKIES_DATA.CART_VERSION, `${data.version}`, {
       maxAge: 60 * 60 * 24 * 30,
       expires: refreshTokenExpirationDate,
       sameSite: 'none',
       secure: true,
-      httpOnly: true,
     });
   }
 

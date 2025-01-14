@@ -42,7 +42,7 @@ export async function middleware(req: NextRequest) {
         expires: expirationDate,
         sameSite: 'none',
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
       });
       const refreshTokenExpirationDate = new Date();
       refreshTokenExpirationDate.setTime(
@@ -53,7 +53,7 @@ export async function middleware(req: NextRequest) {
         expires: refreshTokenExpirationDate,
         sameSite: 'none',
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
       });
       response.cookies.set(
         COOKIES_DATA.USER_TYPE,

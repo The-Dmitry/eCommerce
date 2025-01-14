@@ -67,13 +67,21 @@ export async function middleware(req: NextRequest) {
         }
       );
       if (active_cart) {
-        response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id);
+        const cartExpiration = new Date();
+        cartExpiration.setTime(cartExpiration.getTime() + expires_in * 1000);
+        response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id, {
+          maxAge: 60 * 60 * 24 * 30,
+          expires: cartExpiration,
+          sameSite: 'none',
+          secure: true,
+          httpOnly: true,
+        });
         response.cookies.set(
           COOKIES_DATA.CART_VERSION,
           `${active_cart.version}`,
           {
             maxAge: 60 * 60 * 24 * 30,
-            expires: refreshTokenExpirationDate,
+            expires: cartExpiration,
             sameSite: 'none',
             secure: true,
             httpOnly: true,

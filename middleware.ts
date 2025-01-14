@@ -33,10 +33,13 @@ export async function middleware(req: NextRequest) {
     if ('access_token' in data) {
       const { access_token, refresh_token, expires_in, scope } = data;
       const active_cart = await fetchActiveCart(access_token);
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + expires_in * 1000);
       const isAnonymous = scope.includes('anonymous');
       const response = NextResponse.next();
       response.cookies.set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
         maxAge: expires_in,
+        expires: expirationDate,
       });
       response.cookies.set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
         maxAge: 60 * 60 * 24 * 30,

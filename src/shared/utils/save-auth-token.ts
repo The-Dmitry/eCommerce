@@ -10,10 +10,13 @@ export default function saveAuthToken({
   scope,
 }: AuthSuccess) {
   const isAnonymous = scope.includes('anonymous');
+  const expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + expires_in * 1000);
   cookies().set(COOKIES_DATA.ACCESS_TOKEN, access_token, {
-    maxAge: expires_in,
+    maxAge: 60 * 60 * 24 * 30,
     httpOnly: true,
     secure: true,
+    expires: expirationDate,
   });
   cookies().set(COOKIES_DATA.REFRESH_TOKEN, refresh_token, {
     maxAge: 60 * 60 * 24 * 30,

@@ -27,8 +27,24 @@ export default async function loginUser(email: string, password: string) {
   }
   const data = await fetchActiveCart(result.access_token);
   if (data) {
-    cookies().set(COOKIES_DATA.CART_ID, data.id);
-    cookies().set(COOKIES_DATA.CART_VERSION, `${data.version}`);
+    const refreshTokenExpirationDate = new Date();
+    refreshTokenExpirationDate.setTime(
+      refreshTokenExpirationDate.getTime() + 60 * 60 * 24 * 30
+    );
+    cookies().set(COOKIES_DATA.CART_ID, data.id, {
+      maxAge: 60 * 60 * 24 * 30,
+      expires: refreshTokenExpirationDate,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+    });
+    cookies().set(COOKIES_DATA.CART_VERSION, `${data.version}`, {
+      maxAge: 60 * 60 * 24 * 30,
+      expires: refreshTokenExpirationDate,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+    });
   }
 
   saveAuthToken(result);

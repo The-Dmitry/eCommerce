@@ -1,10 +1,10 @@
 'use client';
 
+import logOut from '@shared/utils/api/auth/logout';
 import { usePathname } from 'next/navigation';
 import { CiLogout } from 'react-icons/ci';
 import { Routes } from '../shared/constants/routes';
 import { LinkProps } from '../shared/models/link-props';
-import logOut from '@shared/utils/api/auth/logout';
 
 interface Props extends LinkProps {
   className?: string;
@@ -12,9 +12,8 @@ interface Props extends LinkProps {
 
 export default function LogoutButton({ icon, className }: Props) {
   const pathName = usePathname();
-  const redirect =
-    pathName.replaceAll('/', '') === Routes.PERSONAL.replaceAll('/', '');
-
+  const redirect = pathName.includes(Routes.PERSONAL);
+  console.log(redirect);
   return (
     <button className={className} onClick={async () => await logOut(redirect)}>
       {icon ? <CiLogout className='text-4xl' title='Logout' /> : 'Logout'}

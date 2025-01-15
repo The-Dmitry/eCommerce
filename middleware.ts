@@ -1,4 +1,4 @@
-import initializeCart from '@shared/utils/api/cart/initialize-cart';
+import fetchActiveCart from '@shared/utils/api/cart/fetch-active-cart';
 import { NextResponse, type NextRequest } from 'next/server';
 import { COOKIES_DATA } from './src/shared/constants/cookies-data';
 import { Routes } from './src/shared/constants/routes';
@@ -29,8 +29,8 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
+  const response = NextResponse.next();
   if (!(token && refreshToken)) {
-    const response = NextResponse.next();
     const data = await getAnonymousToken();
     if ('access_token' in data) {
       const { access_token, refresh_token, expires_in, scope } = data;
@@ -51,8 +51,12 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token && !cartId?.value) {
-    const response = NextResponse.next();
-    await initializeCart(token.value, response);
+    const active_cart = await fetchActiveCart(token.value);
+    if (active_cart) {
+      response.cookies.set(COOKIES_DATA.CART_ID, active_cart.id);
+      response.cookies.set(COOKIES_DATA.CART_VERSION, `${active_cart.version}`);
+    }
+
     return response;
   }
 }

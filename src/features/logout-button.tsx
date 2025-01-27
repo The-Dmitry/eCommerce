@@ -13,7 +13,6 @@ interface Props extends LinkProps {
 export default function LogoutButton({ icon, className }: Props) {
   const pathName = usePathname();
   const redirect = pathName.includes(Routes.PERSONAL);
-  console.log(redirect);
   return (
     <button className={className} onClick={async () => await logOut(redirect)}>
       {icon ? <CiLogout className='text-4xl' title='Logout' /> : 'Logout'}

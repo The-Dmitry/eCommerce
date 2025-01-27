@@ -16,7 +16,7 @@ const tabs: { text: string; href: string; Icon: IconType; active: string }[] = [
   },
   {
     text: 'Password',
-    href: './password',
+    href: '/personal/password',
     Icon: LuKeyRound,
     active: 'password',
   },

@@ -9,6 +9,7 @@ export default function Greeting() {
         alt='stray'
         fill
         className='absolute z-[-1] size-full rounded-2xl bg-left object-cover object-right'
+        priority
       />
       <h1
         className='text-shadow col-[1_/_2] pb-[14%] text-orange-500'

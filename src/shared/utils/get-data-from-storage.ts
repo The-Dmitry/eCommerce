@@ -1,6 +1,6 @@
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
 export default function getDataFromStorage(key: string) {
-  const value = cookies().get(key)?.value || headers().get(key);
+  const value = cookies().get(key)?.value;
   return value;
 }

@@ -2,7 +2,9 @@
 
 import { BASE_URL } from '@/src/shared/constants/base-url';
 import UserData from '@/src/shared/models/UserData';
+import { COOKIES_DATA } from '@shared/constants/cookies-data';
 import getUserData from '@shared/utils/api/auth/get-user-data';
+import { cookies } from 'next/headers';
 import { ZodFormattedError } from 'zod';
 import filterObjectEmptyValues from '../../filter-object-empty-values';
 import personalDataChangeScheme, {
@@ -68,6 +70,10 @@ export default async function changePersonalData(
       actions,
     }),
   });
+
+  if ('version' in request) {
+    cookies().set(COOKIES_DATA.USER_TYPE, `${request.version}`);
+  }
 
   return 'errors' in request
     ? { auth: request.message, credentials: { _errors: [] } }

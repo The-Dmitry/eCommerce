@@ -1,5 +1,7 @@
-import PersonalDataPage from '@features/personal/personal-data-page';
+import PersonalDataForm from '@features/personal/personal-data-form';
+import getUserData from '@shared/utils/api/auth/get-user-data';
 
 export default async function personalPage() {
-  return <PersonalDataPage />;
+  const userData = await getUserData();
+  return <PersonalDataForm userData={userData} />;
 }

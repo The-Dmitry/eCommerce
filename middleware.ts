@@ -16,14 +16,14 @@ export async function middleware(req: NextRequest) {
   ];
 
   if (
-    userType?.value === REGISTERED_USER &&
+    userType?.value &&
     routes.includes(req.nextUrl.pathname.replace(/\/$/, ''))
   ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
   if (
-    userType?.value !== REGISTERED_USER &&
+    !userType?.value &&
     req.nextUrl.pathname.replace(/\/$/, '') === Routes.PERSONAL
   ) {
     return NextResponse.redirect(new URL('/', req.url));

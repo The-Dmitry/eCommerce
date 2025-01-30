@@ -5,6 +5,8 @@ import SubmitButton from '@/src/shared/ui/submit-button';
 import changePersonalData from '@/src/shared/utils/api/personal/change-personal-data';
 import Autocomplete from '@shared/ui/form/autocomplete';
 import Form from '@shared/ui/form/form';
+import logOut from '@shared/utils/api/auth/logout';
+import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 
 export default function PersonalDataForm({ userData }: { userData: UserData }) {
@@ -28,6 +30,18 @@ export default function PersonalDataForm({ userData }: { userData: UserData }) {
   const lastNameError = errors?.credentials.lastName?._errors[0];
   const dateOfBirthError = errors?.credentials.dateOfBirth?._errors[0];
   const countryError = errors?.credentials.country?._errors[0];
+
+  const isError = 'error' in userData;
+
+  useEffect(() => {
+    if (isError) {
+      logOut(true);
+    }
+  }, [isError]);
+
+  if (isError) {
+    return <></>;
+  }
 
   return (
     <Form className='w-full' action={action}>
